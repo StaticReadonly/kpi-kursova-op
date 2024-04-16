@@ -1,0 +1,31 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 80px;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 5% 0 5%;
+    font-size: 20px;
+    border-bottom: 1px solid black;
+}
+
+header > a{
+    display: flex;
+    padding: 20px;
+    align-items: center;
+}
+
+main{
+    width: 100%;
+    margin-top: 80px;
+    display: flex;
+    font-size: 18px;
+}

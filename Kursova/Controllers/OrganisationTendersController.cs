@@ -2,8 +2,8 @@
 
 namespace Kursova.Controllers
 {
-    [Route("/")]
-    public class HomeController : Controller
+    [Route("tenders")]
+    public class OrganisationTendersController : Controller
     {
         [HttpGet]
         public IActionResult Index()

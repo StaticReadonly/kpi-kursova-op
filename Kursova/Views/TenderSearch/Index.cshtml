@@ -1,1 +1,41 @@
-﻿<div>Main page</div>
+﻿@{
+    ViewBag.Title = "Tenders";
+    TenderSearchViewModel mod = (TenderSearchViewModel)Model;
+}
+
+<link rel="stylesheet" href="~/css/TenderSearch.css" />
+
+<form method="get" class="tendersSearchMainContainer">
+    <div class="tendersSearchMainSign">
+        Tenders:
+    </div>
+    <div class="tendersSearchInputContainer">
+        <input type="text" name="query" class="tendersSearchInputField" />
+        <button type="submit" class="tendersSearchInputBtn">Search</button>
+    </div>
+    <div class="tendersListContainer">
+        @{
+            foreach(var m in mod.Tenders)
+            {
+                <div class="tenderContainer">
+                    <div class="tenderName">@m.Name</div>
+                    <div class="tenderCost">Price: @m.Cost</div>
+                    <div class="tenderDesc">@m.Description</div>
+                    <div class="tenderCreationDate">Created: @m.CreationDate</div>
+                    <a href="/">Go to tender page</a>
+                </div>
+            }
+        }
+    </div>
+    <div class="tendersNavigationContainer">
+        <a class="tendersNavigationBtn" 
+            href="/?page=@(mod.CurrentPage-1)@(mod.Query is null ? ("") : ("&query=" + mod.Query))">
+            Previous page
+        </a>
+        <span class="tendersPageSign"> @(mod.CurrentPage)/@(mod.TotalPages) </span>
+        <a class="tendersNavigationBtn" 
+            href="/?page=@(mod.CurrentPage+1)@(mod.Query is null ? ("") : ("&query=" + mod.Query))">
+            Next page
+        </a>
+    </div>
+</form>

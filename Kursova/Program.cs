@@ -8,6 +8,9 @@ namespace Kursova
             var services = builder.Services;
             var config = builder.Configuration;
 
+            services.AddAuthorization();
+            services.AddAuthentication();
+
             services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -20,6 +23,9 @@ namespace Kursova
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

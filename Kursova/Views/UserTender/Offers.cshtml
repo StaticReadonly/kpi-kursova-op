@@ -1,0 +1,48 @@
+﻿@model UserTenderOffersViewModel;
+@{
+    ViewBag.Title = "Offers";
+}
+
+<link rel="stylesheet" href="~/css/TenderOffers.css"/>
+
+<div class="offersContainer">
+    <div>
+        Tender Offers:
+    </div>
+    <div>
+        @{
+            foreach(var m in Model.Offers)
+            {
+                var offerer = m.Offerer;
+
+                <div>
+                    <div>
+                        <div>Offerer: @offerer.Surname @offerer.Name @offerer.Patronimyc</div>
+                        <div>Price: @m.Price</div>
+                        <div>Decsription: @m.Description</div>
+                        <div>Creation date: @m.CreationDate</div>
+                    </div>
+                    <div>
+                        <form method="post">
+                            <input type="hidden" name="action" value="accept"/>
+                            <button type="submit">Accept</button>
+                        </form>
+                        <form method="post">
+                            <input type="hidden" name="action" value="refuse"/>
+                            <button type="submit">Refuse</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div>
+        <a href="/offers?page=@(Model.CurrentPage-1)&id=@(Model.Id)">
+            Previous page
+        </a>
+        <span> @(Model.CurrentPage)/@(Model.TotalPages) </span>
+        <a href="/offers?page=@(Model.CurrentPage+1)&id=@(Model.Id)">
+            Next page
+        </a>
+    </div>
+</div>

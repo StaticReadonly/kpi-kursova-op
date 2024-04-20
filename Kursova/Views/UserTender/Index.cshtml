@@ -1,4 +1,4 @@
-﻿@model TenderSearchViewModel;
+﻿@model UserTenderViewModel;
 @{
     ViewBag.Title = "Tenders";
 }
@@ -7,7 +7,7 @@
 
 <form method="get" class="tendersSearchMainContainer">
     <div class="tendersSearchMainSign">
-        Tenders:
+        Your Tenders:
     </div>
     <div class="tendersSearchInputContainer">
         <input type="text" name="query" class="tendersSearchInputField" />
@@ -15,26 +15,26 @@
     </div>
     <div class="tendersListContainer">
         @{
-            foreach(var m in Model.Tenders)
+            foreach (var m in Model.Tenders)
             {
                 <div class="tenderContainer">
                     <div class="tenderName tenderItemBorder">@m.Name</div>
                     <div class="tenderCost tenderItemBorder">Price: @m.Cost</div>
                     <div class="tenderDesc tenderItemBorder">@m.Description</div>
                     <div class="tenderCreationDate tenderItemBorder">Created: @m.CreationDate</div>
-                    <a href="/">Go to tender page</a>
+                    <a href="/tenders/offers?id=@m.Id">Show offers</a>
                 </div>
             }
         }
     </div>
     <div class="tendersNavigationContainer">
         <a class="tendersNavigationBtn"
-           href="/?page=@(Model.CurrentPage-1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
+           href="/tenders?page=@(Model.CurrentPage-1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
             Previous page
         </a>
         <span class="tendersPageSign"> @(Model.CurrentPage)/@(Model.TotalPages) </span>
         <a class="tendersNavigationBtn"
-           href="/?page=@(Model.CurrentPage+1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
+           href="/tenders?page=@(Model.CurrentPage+1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
             Next page
         </a>
     </div>

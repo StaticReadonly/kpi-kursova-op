@@ -1,5 +1,22 @@
-﻿@{
+﻿@model UserViewModel;
+@{
     ViewBag.Title = "User";
 }
 
-<div>User page</div>
+<link rel="stylesheet" href="~/css/User.css" />
+
+<div class="userDataContainer">
+    <div class="userDataSet">
+        <div>Name: @Model.Name</div>
+        <div>Surname: @Model.Surname</div>
+        <div>Patronimyc: @Model.Patronimyc</div>
+    </div>
+    <div class="userDataSet">
+        <div>Email: @Model.Email</div>
+        <div>Address: @Model.Address</div>
+    </div>
+    <div class="userDataSet">
+        <a href="/offers">Offers</a>
+        <a href="/tenders">Tenders</a>
+    </div>
+</div>

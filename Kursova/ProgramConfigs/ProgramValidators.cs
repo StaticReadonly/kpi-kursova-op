@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Models.ControllerModels;
+using Models.ModelValidators.ControllerModels;
 using Models.ModeValidators.ControllerModels;
 
 namespace Kursova.ProgramConfigs
@@ -10,6 +11,7 @@ namespace Kursova.ProgramConfigs
         {
             services.AddScoped<IValidator<UserLoginModel>, UserLoginModelValidator>();
             services.AddScoped<IValidator<UserRegistrationModel>, UserRegistrationModelValidator>();
+            services.AddScoped<IValidator<UserTenderOffersModel>, UserTenderOffersModelValidator>();
         }
     }
 }

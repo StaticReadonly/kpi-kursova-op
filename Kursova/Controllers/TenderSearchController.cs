@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Models.ControllerModels;
 using Models.DbModels;
+using Models.Options;
 using Models.ViewModels;
 
 namespace Kursova.Controllers
@@ -8,12 +10,18 @@ namespace Kursova.Controllers
     [Route("/")]
     public class TenderSearchController : Controller
     {
+        private readonly PaginationOptions _paginationOptions;
+
+        public TenderSearchController(IOptions<PaginationOptions> paginationOptions)
+        {
+            _paginationOptions = paginationOptions.Value;
+        }
+
         [HttpGet]
         public IActionResult Index([FromQuery] TenderSearchModel searchModel)
         {
             if (searchModel.Page < 1) return Redirect("/");
 
-            int amount = 3;
             TenderSearchViewModel model = new TenderSearchViewModel();
 
             var tenders = Models;
@@ -25,18 +33,20 @@ namespace Kursova.Controllers
             }
 
             model.CurrentPage = searchModel.Page;
-            if (tenders.Count % amount != 0)
+            if (tenders.Count % _paginationOptions.ItemsPerPage != 0)
             {
-                model.TotalPages = tenders.Count / amount + 1;
+                model.TotalPages = tenders.Count / _paginationOptions.ItemsPerPage + 1;
             }
             else
             {
-                model.TotalPages = tenders.Count / amount;
+                model.TotalPages = tenders.Count / _paginationOptions.ItemsPerPage;
             }
 
             if (searchModel.Page > model.TotalPages) return Redirect("/");
 
-            model.Tenders = tenders.Skip((searchModel.Page - 1) * amount).Take(amount).ToList();
+            model.Tenders = tenders.Skip((searchModel.Page - 1) * _paginationOptions.ItemsPerPage)
+                .Take(_paginationOptions.ItemsPerPage)
+                .ToList();
 
             return View(model);
         }

@@ -4,6 +4,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Models.ControllerModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Kursova.Controllers
 {
@@ -29,7 +31,7 @@ namespace Kursova.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromForm] UserLoginModel loginModel)
+        public async Task<IActionResult> Login([FromForm] UserLoginModel loginModel)
         {
             ValidationResult res = _userLoginModelValidator.Validate(loginModel);
             
@@ -39,6 +41,12 @@ namespace Kursova.Controllers
 
                 return View("Index");
             }
+
+            Claim email = new Claim("Email", loginModel.Email!);
+            ClaimsIdentity identity = new ClaimsIdentity(new Claim[] { email }, "Cookies");
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync("Cookies", principal);
 
             return Redirect("/");
         }

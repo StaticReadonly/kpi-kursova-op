@@ -1,0 +1,18 @@
+﻿.userDataContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: stretch;
+    gap: 30px;
+    font-size: 20px;
+}
+
+.userDataSet {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

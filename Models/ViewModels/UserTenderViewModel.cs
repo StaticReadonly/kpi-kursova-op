@@ -2,7 +2,7 @@
 
 namespace Models.ViewModels
 {
-    public class TenderSearchViewModel : PaginationModelBase
+    public class UserTenderViewModel : PaginationModelBase
     {
         public List<TenderModel> Tenders { get; set; } = new List<TenderModel>();
     }

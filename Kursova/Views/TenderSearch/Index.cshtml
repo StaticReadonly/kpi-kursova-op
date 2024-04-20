@@ -18,10 +18,10 @@
             foreach(var m in mod.Tenders)
             {
                 <div class="tenderContainer">
-                    <div class="tenderName">@m.Name</div>
-                    <div class="tenderCost">Price: @m.Cost</div>
-                    <div class="tenderDesc">@m.Description</div>
-                    <div class="tenderCreationDate">Created: @m.CreationDate</div>
+                    <div class="tenderName tenderItemBorder">@m.Name</div>
+                    <div class="tenderCost tenderItemBorder">Price: @m.Cost</div>
+                    <div class="tenderDesc tenderItemBorder">@m.Description</div>
+                    <div class="tenderCreationDate tenderItemBorder">Created: @m.CreationDate</div>
                     <a href="/">Go to tender page</a>
                 </div>
             }

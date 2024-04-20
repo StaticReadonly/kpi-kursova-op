@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<link rel="stylesheet" href="~/css/Login.css" />
+
+<div class="loginContainer">
+    <div class="loginContainerLabel">
+        Create new account
+    </div>
+    <form method="post" class="loginContainerForm">
+        <label class="formLabel">
+            Name:
+            <input type="text" name="name" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Surname:
+            <input type="text" name="surname" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Patronimyc:
+            <input type="text" name="patronimyc" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Address:
+            <input type="text" name="address" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Email:
+            <input type="email" name="email" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Password:
+            <input type="password" name="password" class="formInput" />
+        </label>
+        <div class="formLoginButtonContainer">
+            <button type="submit" class="formLoginButton">
+                Create
+            </button>
+        </div>
+    </form>
+</div>

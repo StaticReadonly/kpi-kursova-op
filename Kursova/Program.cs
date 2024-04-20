@@ -1,3 +1,9 @@
+using FluentValidation;
+using Kursova.ProgramConfigs;
+using Models.ControllerModels;
+using Models.ModeValidators.ControllerModels;
+using Services.Filters;
+
 namespace Kursova
 {
     public class Program
@@ -11,7 +17,12 @@ namespace Kursova
             services.AddAuthorization();
             services.AddAuthentication();
 
-            services.AddControllersWithViews();
+            services.AddMvc();
+
+            //filters
+            ProgramFilters.AddFilters(services);
+            //model validators
+            ProgramValidators.AddModelValidators(services);
 
             var app = builder.Build();
 

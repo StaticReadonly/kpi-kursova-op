@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models.ControllerModels;
 using Models.DbModels;
 using Models.ViewModels;
 
@@ -8,22 +9,22 @@ namespace Kursova.Controllers
     public class TenderSearchController : Controller
     {
         [HttpGet]
-        public IActionResult Index([FromQuery] int page = 1, [FromQuery] string? query = null)
+        public IActionResult Index([FromQuery] TenderSearchModel searchModel)
         {
-            if (page < 1) return Redirect("/");
+            if (searchModel.Page < 1) return Redirect("/");
 
             int amount = 3;
             TenderSearchViewModel model = new TenderSearchViewModel();
 
             var tenders = Models;
 
-            if (query != null)
+            if (searchModel.Query != null)
             {
-                model.Query = query;
-                tenders = tenders.FindAll(m => m.Name.Contains(query));
+                model.Query = searchModel.Query;
+                tenders = tenders.FindAll(m => m.Name.Contains(searchModel.Query));
             }
 
-            model.CurrentPage = page;
+            model.CurrentPage = searchModel.Page;
             if (tenders.Count % amount != 0)
             {
                 model.TotalPages = tenders.Count / amount + 1;
@@ -33,9 +34,9 @@ namespace Kursova.Controllers
                 model.TotalPages = tenders.Count / amount;
             }
 
-            if (page > model.TotalPages) return Redirect("/");
+            if (searchModel.Page > model.TotalPages) return Redirect("/");
 
-            model.Tenders = tenders.Skip((page - 1) * amount).Take(amount).ToList();
+            model.Tenders = tenders.Skip((searchModel.Page - 1) * amount).Take(amount).ToList();
 
             return View(model);
         }

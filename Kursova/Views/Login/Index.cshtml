@@ -2,4 +2,26 @@
     ViewBag.Title = "Login";
 }
 
-<div>This is login page</div>
+<link rel="stylesheet" href="~/css/Login.css" />
+
+<div class="loginContainer">
+    <div class="loginContainerLabel">
+        Login
+    </div>
+    <form method="post" class="loginContainerForm">
+        <label class="formLabel">
+            Email:
+            <input type="email" name="email" class="formInput" />
+        </label>
+        <label class="formLabel">
+            Password:
+            <input type="password" name="password" class="formInput" />
+        </label>
+        <div class="formLoginButtonContainer">
+            <button type="submit" class="formLoginButton">Login</button>
+        </div>
+    </form>
+    <div class="formLinkContainer">
+        <a href="/login/new">Create new account</a>
+    </div>
+</div>

@@ -1,9 +1,7 @@
-using FluentValidation;
 using Kursova.ProgramConfigs;
-using Models.ControllerModels;
-using Models.ModeValidators.ControllerModels;
+using Microsoft.EntityFrameworkCore;
 using Models.Options;
-using Services.Filters;
+using System.Reflection;
 
 namespace Kursova
 {
@@ -15,6 +13,7 @@ namespace Kursova
             var services = builder.Services;
             var config = builder.Configuration;
 
+            config.AddUserSecrets(Assembly.GetExecutingAssembly());
             config.AddJsonFile("Configuration/config.json");
 
             services.Configure<PaginationOptions>(config.GetSection("Pagination"));
@@ -33,6 +32,11 @@ namespace Kursova
                 });
 
             services.AddMvc();
+
+            services.AddDbContext<DatabaseContext.DatabaseContext>(cfg =>
+            {
+                cfg.UseNpgsql(config["Database:ConnectionString"]);
+            });
 
             //filters
             ProgramFilters.AddFilters(services);

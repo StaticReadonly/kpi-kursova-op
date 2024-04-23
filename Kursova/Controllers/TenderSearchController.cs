@@ -1,93 +1,59 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Models.ControllerModels;
-using Models.DbModels;
-using Models.Options;
-using Models.ViewModels;
+using Models.ViewModels.TenderSearch;
+using Services.Abstractions;
 
 namespace Kursova.Controllers
 {
     [Route("/")]
     public class TenderSearchController : Controller
     {
-        private readonly PaginationOptions _paginationOptions;
+        private readonly ILogger<TenderSearchController> _logger;
+        private readonly IMapper _mapper;
+        private readonly ITendersRepository _tendersRepository;
 
-        public TenderSearchController(IOptions<PaginationOptions> paginationOptions)
+        public TenderSearchController(
+            IMapper mapper,
+            ITendersRepository tendersRepository,
+            ILogger<TenderSearchController> logger
+            )
         {
-            _paginationOptions = paginationOptions.Value;
+            _mapper = mapper;
+            _tendersRepository = tendersRepository;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult Index([FromQuery] TenderSearchModel searchModel)
         {
-            if (searchModel.Page < 1) return Redirect("/");
-
-            TenderSearchViewModel model = new TenderSearchViewModel();
-
-            var tenders = Models;
-
-            if (searchModel.Query != null)
+            try
             {
-                model.Query = searchModel.Query;
-                tenders = tenders.FindAll(m => m.Name.Contains(searchModel.Query));
-            }
+                var result = _tendersRepository.GetTenders(searchModel);
 
-            model.CurrentPage = searchModel.Page;
-            if (tenders.Count % _paginationOptions.ItemsPerPage != 0)
+                return View(result);
+            }
+            catch(ArgumentException ex)
             {
-                model.TotalPages = tenders.Count / _paginationOptions.ItemsPerPage + 1;
+                _logger.LogError($"Invalid page. Details: {ex.Message}");
+                return Redirect("/");
             }
-            else
-            {
-                model.TotalPages = tenders.Count / _paginationOptions.ItemsPerPage;
-            }
-
-            if (searchModel.Page > model.TotalPages) return Redirect("/");
-
-            model.Tenders = tenders.Skip((searchModel.Page - 1) * _paginationOptions.ItemsPerPage)
-                .Take(_paginationOptions.ItemsPerPage)
-                .ToList();
-
-            return View(model);
         }
 
-        private static List<TenderModel> Models = new List<TenderModel>() 
+        [HttpGet("tender/{id:guid}")]
+        public IActionResult TenderInfo([FromRoute] Guid id)
         {
-            new()
+            try
             {
-                Name = "Tender1",
-                Cost = 1.1m,
-                Description = "description1",
-                CreationDate = DateTime.Now
-            },
-            new()
-            {
-                Name = "Tender2",
-                Cost = 2.2m,
-                Description = "description2",
-                CreationDate = DateTime.Now
-            },
-            new()
-            {
-                Name = "Tender3",
-                Cost = 3.3m,
-                Description = "description3",
-                CreationDate = DateTime.Now
-            },
-            new()
-            {
-                Name = "Tender4",
-                Cost = 4.4m,
-                Description = "description4",
-                CreationDate = DateTime.Now
-            },
-            new()
-            {
-                Name = "Tender5",
-                Cost = 5.5m,
-                Description = "description5",
-                CreationDate = DateTime.Now
+                var result = _tendersRepository.GetTenderInfo(id);
+
+                return View(_mapper.Map<TenderInfoViewModel>(result));
             }
-        };
+            catch(ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+                return Redirect("/");
+            }
+        }
     }
 }

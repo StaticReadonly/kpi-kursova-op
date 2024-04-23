@@ -23,6 +23,7 @@ namespace Kursova
                 cfg.AddPolicy("Cookies", cfg =>
                 {
                     cfg.RequireAuthenticatedUser();
+                    cfg.RequireClaim("Id");
                 });
             });
             services.AddAuthentication()
@@ -31,6 +32,8 @@ namespace Kursova
                     cfg.LoginPath = "/login";
                 });
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddMvc();
 
             services.AddDbContext<DatabaseContext.DatabaseContext>(cfg =>
@@ -38,6 +41,8 @@ namespace Kursova
                 cfg.UseNpgsql(config["Database:ConnectionString"]);
             });
 
+            //repositories
+            ProgramRepositories.AddRepositories(services);
             //filters
             ProgramFilters.AddFilters(services);
             //model validators

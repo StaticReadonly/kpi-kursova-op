@@ -4,8 +4,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Models.ControllerModels;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+using Services.Abstractions;
+using Models.Exceptions;
 
 namespace Kursova.Controllers
 {
@@ -15,13 +15,19 @@ namespace Kursova.Controllers
     {
         private readonly IValidator<UserLoginModel> _userLoginModelValidator;
         private readonly IValidator<UserRegistrationModel> _userRegistrationModelValidator;
+        private readonly IUsersRepository _usersRepository;
+        private readonly ILogInService _logInService;
 
         public LoginController(
             IValidator<UserLoginModel> userLoginControllerModelValidator,
-            IValidator<UserRegistrationModel> userRegistrationModelValidator)
+            IValidator<UserRegistrationModel> userRegistrationModelValidator,
+            ILogInService logInService,
+            IUsersRepository usersRepository)
         {
             _userLoginModelValidator = userLoginControllerModelValidator;
             _userRegistrationModelValidator = userRegistrationModelValidator;
+            _logInService = logInService;
+            _usersRepository = usersRepository;
         }
 
         [HttpGet]
@@ -42,13 +48,17 @@ namespace Kursova.Controllers
                 return View("Index");
             }
 
-            Claim email = new Claim("Email", loginModel.Email!);
-            ClaimsIdentity identity = new ClaimsIdentity(new Claim[] { email }, "Cookies");
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+            try
+            {
+                await _logInService.LogIn(HttpContext, loginModel.Email!, loginModel.Password!);
+                return Redirect("/user");
+            }
+            catch (FormFieldException exc)
+            {
+                ModelState.AddModelError(exc.Key, exc.Message);
 
-            await HttpContext.SignInAsync("Cookies", principal);
-
-            return Redirect("/");
+                return View("Index");
+            }
         }
 
         [HttpGet("new")]
@@ -58,7 +68,7 @@ namespace Kursova.Controllers
         }
 
         [HttpPost("new")]
-        public IActionResult Registration([FromForm] UserRegistrationModel registrationModel)
+        public async Task<IActionResult> Registration([FromForm] UserRegistrationModel registrationModel)
         {
             ValidationResult res = _userRegistrationModelValidator.Validate(registrationModel);
 
@@ -69,7 +79,18 @@ namespace Kursova.Controllers
                 return View("Registration");
             }
 
-            return Redirect("/");
+            try
+            {
+                Guid id = await _usersRepository.CreateUser(registrationModel);
+                await _logInService.LogIn(HttpContext, id);
+                return Redirect("/user");
+            }
+            catch (FormFieldException ex)
+            {
+                ModelState.AddModelError(ex.Key, ex.Message);
+
+                return View("Registration");
+            }
         }
     }
 }

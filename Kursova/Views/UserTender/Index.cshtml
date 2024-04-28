@@ -1,16 +1,17 @@
-﻿@model UserTenderViewModel;
+﻿@model UserTenderViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewBag.Title = "Tenders";
 }
 
 <link rel="stylesheet" href="~/css/TenderSearch.css" />
 
-<form method="get" class="tendersSearchMainContainer">
+<form asp-controller="UserTender" asp-action="Index" method="get" class="tendersSearchMainContainer">
     <div class="tendersSearchMainSign">
         Your Tenders:
     </div>
     <div class="tendersSearchInputContainer">
-        <input type="text" name="query" class="tendersSearchInputField" />
+        <input type="text" asp-for="Query" class="tendersSearchInputField" />
         <button type="submit" class="tendersSearchInputBtn">Search</button>
     </div>
     <div class="tendersListContainer">
@@ -28,14 +29,16 @@
         }
     </div>
     <div class="tendersNavigationContainer">
-        <a class="tendersNavigationBtn"
-           href="/tenders?page=@(Model.CurrentPage-1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
+        <button class="tendersNavigationBtn" type="submit" name="page" 
+            value="@(Model.CurrentPage - 1)" disabled="@(Model.CurrentPage == 1 ? true : false)"
+            >
             Previous page
-        </a>
+        </button>
         <span class="tendersPageSign"> @(Model.CurrentPage)/@(Model.TotalPages) </span>
-        <a class="tendersNavigationBtn"
-           href="/tenders?page=@(Model.CurrentPage+1)@(Model.Query is null ? ("") : ("&query=" + Model.Query))">
+        <button class="tendersNavigationBtn" type="submit" name="page" 
+            value="@(Model.CurrentPage + 1)" disabled="@(Model.CurrentPage == Model.TotalPages ? true : false)"
+            >
             Next page
-        </a>
+        </button>
     </div>
 </form>

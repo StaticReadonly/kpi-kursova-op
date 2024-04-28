@@ -104,7 +104,14 @@
     box-shadow: 1px 1px 5px black;
 }
 
-.tendersPageSign{
+.tendersNavigationBtn:disabled{
+    transition: none;
+    box-shadow: none;
+    background-color: rgb(167, 167, 167);
+    cursor: not-allowed;
+}
+
+.tendersPageSign {
     font-size: inherit;
     display: flex;
     padding: 5px;

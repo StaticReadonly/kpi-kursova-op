@@ -75,5 +75,50 @@ namespace Services.Repositories
 
             return result;
         }
+
+        public UserTenderViewModel GetUserTenders(TenderSearchModel model, Guid userId)
+        {
+            UserTenderViewModel res = new UserTenderViewModel() 
+            {
+                CurrentPage = model.Page
+            };
+
+            List<TenderModel>? tenders = null;
+
+            if (model.Query != null)
+            {
+                tenders = _context.TenderModels
+                    .Where(t => t.OwnerId == userId && t.Name.Contains(model.Query))
+                    .OrderByDescending(t => t.CreationDate)
+                    .ToList();
+            }
+            else
+            {
+                tenders = _context.TenderModels
+                    .Where(t => t.OwnerId == userId)
+                    .OrderByDescending(t => t.CreationDate)
+                    .ToList();
+            }
+
+            var cnt = tenders.Count;
+
+            if (cnt % _paginationOptions.ItemsPerPage != 0)
+            {
+                res.TotalPages = cnt / _paginationOptions.ItemsPerPage + 1;
+            }
+            else
+            {
+                res.TotalPages = cnt / _paginationOptions.ItemsPerPage;
+            }
+
+            if (model.Page > res.TotalPages)
+                throw new ArgumentException($"Tried to access unexisting page {model.Page}");
+
+            res.Tenders = tenders.Skip((model.Page - 1) * _paginationOptions.ItemsPerPage)
+                .Take(_paginationOptions.ItemsPerPage)
+                .ToList();
+
+            return res;
+        }
     }
 }

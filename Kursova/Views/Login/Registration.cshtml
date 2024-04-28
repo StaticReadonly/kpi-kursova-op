@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Models.ControllerModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model UserRegistrationModel
+@{
     ViewBag.Title = "Login";
 }
 
@@ -8,30 +11,36 @@
     <div class="loginContainerLabel">
         Create new account
     </div>
-    <form method="post" class="loginContainerForm">
-        <label class="formLabel">
+    <form method="post" asp-controller="Login" asp-action="Registration" class="loginContainerForm">
+        <label class="formLabel" asp-for="Name">
             Name:
-            <input type="text" name="name" class="formInput" />
+            <input asp-for="Name" type="text" class="formInput" />
+            <span asp-validation-for="Name" class="errorField"></span>
         </label>
-        <label class="formLabel">
+        <label class="formLabel" asp-for="Surname">
             Surname:
-            <input type="text" name="surname" class="formInput" />
+            <input asp-for="Surname" type="text" class="formInput" />
+            <span asp-validation-for="Surname" class="errorField"></span>
         </label>
-        <label class="formLabel">
+        <label class="formLabel" asp-for="Patronimyc">
             Patronimyc:
-            <input type="text" name="patronimyc" class="formInput" />
+            <input asp-for="Patronimyc" type="text" class="formInput" />
+            <span asp-validation-for="Patronimyc" class="errorField"></span>
         </label>
-        <label class="formLabel">
+        <label class="formLabel" asp-for="Address">
             Address:
-            <input type="text" name="address" class="formInput" />
+            <input asp-for="Address" type="text" class="formInput" />
+            <span asp-validation-for="Address" class="errorField"></span>
         </label>
-        <label class="formLabel">
+        <label class="formLabel" asp-for="Email">
             Email:
-            <input type="email" name="email" class="formInput" />
+            <input asp-for="Email" type="email" class="formInput" />
+            <span asp-validation-for="Email" class="errorField"></span>
         </label>
-        <label class="formLabel">
+        <label class="formLabel" asp-for="Password">
             Password:
-            <input type="password" name="password" class="formInput" />
+            <input asp-for="Password" type="password" class="formInput" />
+            <span asp-validation-for="Password" class="errorField"></span>
         </label>
         <div class="formLoginButtonContainer">
             <button type="submit" class="formLoginButton">

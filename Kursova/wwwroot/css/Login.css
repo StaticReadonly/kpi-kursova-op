@@ -6,6 +6,7 @@
     border: 1px solid black;
     border-radius: 10px;
     padding: 10px;
+    width: 50%;
 }
 
 .loginContainerLabel {
@@ -22,8 +23,8 @@
 }
 
 .formLabel {
+    flex-direction: column;
     display: flex;
-    gap: 0.5em;
 }
 
 .formInput {
@@ -57,4 +58,9 @@
     display: flex;
     justify-content: center;
     padding: 1em;
+}
+
+.errorField{
+    display: flex;
+    color: red;
 }

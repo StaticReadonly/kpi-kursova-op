@@ -41,6 +41,8 @@ namespace Kursova
                 cfg.UseNpgsql(config["Database:ConnectionString"]);
             });
 
+            //LogInService
+            ProgramLogInService.AddLogInService(services);
             //repositories
             ProgramRepositories.AddRepositories(services);
             //filters

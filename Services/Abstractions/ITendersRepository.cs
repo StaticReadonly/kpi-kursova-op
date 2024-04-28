@@ -9,5 +9,7 @@ namespace Services.Abstractions
         TenderSearchViewModel GetTenders(TenderSearchModel searchModel);
 
         TenderModel GetTenderInfo(Guid Id);
+
+        UserTenderViewModel GetUserTenders(TenderSearchModel model, Guid userId);
     }
 }

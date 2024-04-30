@@ -1,19 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Models.ControllerModels;
 using Models.Options;
 using Models.ViewModels;
+using Services.Abstractions;
 
 namespace Kursova.Controllers
 {
     [Route("offers")]
+    [Authorize("Cookies")]
     public class UserOffersController : Controller
     {
-        private readonly PaginationOptions _paginationOptions;
+        private readonly IOffersRepository _offersRepository;
+        private readonly ILogger<UserOffersController> _logger;
 
-        public UserOffersController(IOptions<PaginationOptions> paginationOptions)
+        public UserOffersController(
+            IOffersRepository offersRepository,
+            ILogger<UserOffersController> logger)
         {
-            _paginationOptions = paginationOptions.Value;
+            _offersRepository = offersRepository;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -21,71 +28,18 @@ namespace Kursova.Controllers
         {
             if (offersModel.Page < 1) return BadRequest();
 
-            UserOffersViewModel model = new UserOffersViewModel();
-
-            var offers = Models;
-
-            model.CurrentPage = offersModel.Page;
-            if (offers.Count % _paginationOptions.ItemsPerPage != 0)
+            try
             {
-                model.TotalPages = offers.Count / _paginationOptions.ItemsPerPage + 1;
+                var guid = User.Claims.Where(c => c.Type == "Id").First().Value;
+                var res = _offersRepository.GetUserOffers(offersModel, Guid.Parse(guid));
+
+                return View(res);
             }
-            else
+            catch(ArgumentException exc)
             {
-                model.TotalPages = offers.Count / _paginationOptions.ItemsPerPage;
+                _logger.LogError(exc.Message);
+                return BadRequest();
             }
-
-            if (offersModel.Page > model.TotalPages) return Redirect("/");
-
-            model.Offers = offers.Skip((offersModel.Page - 1) * _paginationOptions.ItemsPerPage)
-                .Take(_paginationOptions.ItemsPerPage)
-                .ToList();
-
-            return View(model);
         }
-
-        private static List<UserOfferViewModel> Models = new List<UserOfferViewModel>()
-        {
-            new()
-            {
-                TenderName = "name",
-                CreationDate = DateTime.Now,
-                Description = "description",
-                Price = 1.1m,
-                State = "state"
-            },
-            new()
-            {
-                TenderName = "name",
-                CreationDate = DateTime.Now,
-                Description = "description",
-                Price = 1.1m,
-                State = "state"
-            },
-            new()
-            {
-                TenderName = "name",
-                CreationDate = DateTime.Now,
-                Description = "description",
-                Price = 1.1m,
-                State = "state"
-            },
-            new()
-            {
-                TenderName = "name",
-                CreationDate = DateTime.Now,
-                Description = "description",
-                Price = 1.1m,
-                State = "state"
-            },
-            new()
-            {
-                TenderName = "name",
-                CreationDate = DateTime.Now,
-                Description = "description",
-                Price = 1.1m,
-                State = "state"
-            }
-        };
     }
 }

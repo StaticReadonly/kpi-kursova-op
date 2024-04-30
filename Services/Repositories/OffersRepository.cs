@@ -3,6 +3,8 @@ using Kursova.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Models.ControllerModels;
+using Models.DbModels;
+using Models.Exceptions;
 using Models.Options;
 using Models.ViewModels;
 using Services.Abstractions;
@@ -25,6 +27,102 @@ namespace Services.Repositories
             _mapper = mapper;
         }
 
+        public async Task OfferAction(Guid guid, OfferActionModel model)
+        {
+            var tenderCheck = await _context.TenderModels
+                .Where(t => t.Id == model.TenderId)
+                .Where(t => t.OwnerId == guid)
+                .Include(t => t.Offers)
+                .FirstOrDefaultAsync();
+
+            if (tenderCheck == null)
+                throw new ArgumentException("Can't access tender for specified user");
+
+            if (tenderCheck.StateId != 1)
+                throw new ArgumentException("Tender state is already changed");
+
+            switch (model.Action)
+            {
+                case "accept":
+                    {
+                        await AcceptOffer(tenderCheck, model);
+                        tenderCheck.StateId = 2;
+                        break;
+                    }
+                case "refuse":
+                    {
+                        await RefuseOffer(tenderCheck, model);
+                        break;
+                    }
+                default:
+                    throw new ArgumentException("Invalid offer action");
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        private Task AcceptOffer(TenderModel tmodel, OfferActionModel model)
+        {
+            tmodel.Offers.ForEach(m =>
+            {
+                if (m.Id == model.OfferId)
+                    m.StateId = 3;
+                else
+                    m.StateId = 2;
+            });
+
+            return Task.CompletedTask;
+        }
+
+        private Task RefuseOffer(TenderModel tmodel, OfferActionModel model)
+        {
+            var offer = tmodel.Offers.Where(o => o.Id == model.OfferId)
+                .FirstOrDefault();
+
+            if (offer == null)
+                throw new ArgumentException("Offer does not exist");
+
+            offer.StateId = 2;
+
+            return Task.CompletedTask;
+        }
+
+        public UserOffersViewModel GetUserOffers(UserOffersModel model, Guid userId)
+        {
+            UserOffersViewModel res = new UserOffersViewModel()
+            {
+                CurrentPage = model.Page
+            };
+
+            List<OfferModel>? offers = null;
+
+            offers = _context.OfferModels
+                .Where(m => m.OffererId == userId)
+                .Include(m => m.State)
+                .OrderByDescending(m => m.CreationDate)
+                .ToList();
+
+            var cnt = offers.Count;
+
+            if (cnt % _paginationOptions.ItemsPerPage != 0)
+            {
+                res.TotalPages = cnt / _paginationOptions.ItemsPerPage + 1;
+            }
+            else
+            {
+                res.TotalPages = cnt / _paginationOptions.ItemsPerPage;
+            }
+
+            if (model.Page > res.TotalPages)
+                throw new ArgumentException($"Tried to access unexisting page {model.Page}");
+
+            res.Offers = offers.Skip((model.Page - 1) * _paginationOptions.ItemsPerPage)
+                .Take(_paginationOptions.ItemsPerPage)
+                .ToList();
+
+            return res;
+        }
+
         public UserTenderOffersViewModel GetTenderOffers(UserTenderOffersModel model, Guid owner)
         {
             var user = _context.Users.Where(u => u.Id == owner)
@@ -39,12 +137,17 @@ namespace Services.Repositories
 
             UserTenderOffersViewModel result = new UserTenderOffersViewModel();
 
+            result.Id = model.Id;
             result.CurrentPage = model.Page;
 
             var offers = _context.OfferModels
                 .Where(o => o.TenderId == model.Id)
                 .Include(o => o.Offerer)
+                .Include(o => o.State)
                 .ToList();
+
+            if (offers.Count == 0)
+                throw new NoOffersException();
 
             if (offers.Count % _paginationOptions.ItemsPerPage != 0)
             {

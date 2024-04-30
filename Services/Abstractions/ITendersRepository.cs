@@ -6,7 +6,7 @@ namespace Services.Abstractions
 {
     public interface ITendersRepository
     {
-        TenderSearchViewModel GetTenders(TenderSearchModel searchModel);
+        TenderSearchViewModel GetTenders(TenderSearchModel searchModel, Guid? userId);
 
         TenderModel GetTenderInfo(Guid Id);
 

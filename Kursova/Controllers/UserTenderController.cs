@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Models.ControllerModels;
 using Models.DbModels;
-using Models.Options;
-using Models.ViewModels;
+using Models.Exceptions;
 using Services.Abstractions;
 
 namespace Kursova.Controllers
@@ -16,6 +15,7 @@ namespace Kursova.Controllers
     public class UserTenderController : Controller
     {
         private readonly IValidator<UserTenderOffersModel> _validator;
+        private readonly IValidator<OfferActionModel> _offerActionValidator;
         private readonly ILogger<UserTenderController> _logger;
         private readonly ITendersRepository _tendersRepository;
         private readonly IOffersRepository _offersRepository;
@@ -24,12 +24,14 @@ namespace Kursova.Controllers
             IValidator<UserTenderOffersModel> validator,
             ILogger<UserTenderController> logger,
             ITendersRepository tendersRepository,
-            IOffersRepository offersRepository)
+            IOffersRepository offersRepository,
+            IValidator<OfferActionModel> offerActionValidator)
         {
             _validator = validator;
             _logger = logger;
             _tendersRepository = tendersRepository;
             _offersRepository = offersRepository;
+            _offerActionValidator = offerActionValidator;
         }
 
         [HttpGet]
@@ -69,8 +71,35 @@ namespace Kursova.Controllers
                 var resModel = _offersRepository.GetTenderOffers(offersModel, Guid.Parse(guid));
 
                 return View(resModel);
+            }catch(NoOffersException)
+            {
+                return View("NoOffers");
             }
             catch(ArgumentException exc)
+            {
+                _logger.LogError(exc.Message);
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("offer/action")]
+        public async Task<IActionResult> OfferAction([FromForm] OfferActionModel model)
+        {
+            var result = _offerActionValidator.Validate(model);
+
+            if (!result.IsValid)
+            {
+                return BadRequest();
+            }
+
+            string guid = User.Claims.Where(c => c.Type == "Id").First().Value;
+
+            try
+            {
+                await _offersRepository.OfferAction(Guid.Parse(guid), model);
+                return Redirect("/");
+            }
+            catch (Exception exc)
             {
                 _logger.LogError(exc.Message);
                 return BadRequest();

@@ -22,7 +22,7 @@ namespace Services.Repositories
             _paginationOptions = options.Value;
         }
 
-        public TenderSearchViewModel GetTenders(TenderSearchModel searchModel)
+        public TenderSearchViewModel GetTenders(TenderSearchModel searchModel, Guid? userId)
         {
             if (searchModel.Page < 1)
                 throw new ArgumentException("Can't access page below 1");
@@ -36,6 +36,9 @@ namespace Services.Repositories
             {
                 items = items.Where(i => i.Name.Contains(result.Query));
             }
+
+            if (userId != null)
+                items = items.Where(t => t.OwnerId != userId);
 
             int amount = items.Count();
 
@@ -89,6 +92,7 @@ namespace Services.Repositories
             {
                 tenders = _context.TenderModels
                     .Where(t => t.OwnerId == userId && t.Name.Contains(model.Query))
+                    .Include(t => t.State)
                     .OrderByDescending(t => t.CreationDate)
                     .ToList();
             }
@@ -96,6 +100,7 @@ namespace Services.Repositories
             {
                 tenders = _context.TenderModels
                     .Where(t => t.OwnerId == userId)
+                    .Include(t => t.State)
                     .OrderByDescending(t => t.CreationDate)
                     .ToList();
             }

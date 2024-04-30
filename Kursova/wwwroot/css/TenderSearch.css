@@ -74,6 +74,11 @@
     overflow-wrap: anywhere;
 }
 
+.tenderDesc2{
+    display:flex;
+    flex-direction: column;
+}
+
 .tenderCreationDate {
     display: flex;
     font-size: 18px;

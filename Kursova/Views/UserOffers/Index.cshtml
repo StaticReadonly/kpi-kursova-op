@@ -1,16 +1,48 @@
-﻿@model UserOffersViewModel;
+﻿@model UserOffersViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewBag.Title = "Offers";
 }
 
-<form method="get">
-    <div>
+<link rel="stylesheet" href="~/css//TenderSearch.css"/>
 
+<div class="tendersSearchMainContainer">
+    <div class="tendersSearchMainSign">
+        Your offers:
     </div>
-    <div>
-
+    <div class="tendersListContainer">
+        @{
+            foreach(var o in Model.Offers)
+            {
+                <div class="tenderContainer">
+                    <div class="tenderCost tenderItemBorder">
+                        Price: @o.Price
+                    </div>
+                    <div class="tenderDesc tenderDesc2 tenderItemBorder">
+                        Description:
+                        <div>
+                            @o.Description
+                        </div>
+                    </div>
+                    <div class="tenderCreationDate tenderItemBorder">
+                        Creation date: @o.CreationDate
+                    </div>
+                    <div class="tenderItemBorder">
+                        State: @o.State.Name
+                    </div>
+                </div>
+            }
+        }
     </div>
-    <div>
-
-    </div>
-</form>
+    <form method="get" asp-controller="UserOffers" asp-action="Index" class="tendersNavigationContainer">
+        <button class="tendersNavigationBtn" type="submit" name="page"
+                value="@(Model.CurrentPage - 1)" disabled="@(Model.CurrentPage == 1 ? true : false)">
+            Previous page
+        </button>
+        <span class="tendersPageSign"> @(Model.CurrentPage)/@(Model.TotalPages) </span>
+        <button class="tendersNavigationBtn" type="submit" name="page"
+                value="@(Model.CurrentPage + 1)" disabled="@(Model.CurrentPage == Model.TotalPages ? true : false)">
+            Next page
+        </button>
+    </form>
+</div>

@@ -1,7 +1,9 @@
-﻿namespace Models.ViewModels
+﻿using Models.DbModels;
+
+namespace Models.ViewModels
 {
     public class UserOffersViewModel : PaginationModelBase
     {
-        public List<UserOfferViewModel> Offers { get; set; } = new List<UserOfferViewModel>();
+        public List<OfferModel> Offers { get; set; } = new List<OfferModel>();
     }
 }

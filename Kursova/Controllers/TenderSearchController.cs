@@ -29,7 +29,10 @@ namespace Kursova.Controllers
         {
             try
             {
-                var result = _tendersRepository.GetTenders(searchModel);
+                var claim = User.Claims.Where(c => c.Type == "Id").FirstOrDefault();
+
+                var result = _tendersRepository.GetTenders(searchModel, 
+                    claim == null ? null : Guid.Parse(claim.Value));
 
                 return View(result);
             }

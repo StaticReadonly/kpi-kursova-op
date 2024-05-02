@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Models.ControllerModels;
-using Models.Options;
-using Models.ViewModels;
 using Services.Abstractions;
 
 namespace Kursova.Controllers

@@ -11,5 +11,7 @@ namespace Services.Abstractions
         TenderModel GetTenderInfo(Guid Id);
 
         UserTenderViewModel GetUserTenders(TenderSearchModel model, Guid userId);
+
+        Task CreateNewTender(NewTenderModel model, Guid user);
     }
 }

@@ -9,7 +9,6 @@ namespace Models.AutoMapper
         public TenderInfoViewModelMapper() 
         {
             CreateMap<TenderModel, TenderInfoViewModel>()
-                .ForMember(d => d.State, cfg => cfg.MapFrom(s => s.State.Name))
                 .ForMember(d => d.OwnerFullName, cfg => cfg.MapFrom(s => 
                     $"{s.Owner.Surname} {s.Owner.Name} {s.Owner.Patronimyc}"))
                 .ForMember(d => d.ExecuterFullName, cfg => cfg.MapFrom(s =>

@@ -125,5 +125,21 @@ namespace Services.Repositories
 
             return res;
         }
+
+        public async Task CreateNewTender(NewTenderModel model, Guid user)
+        {
+            TenderModel newTender = new TenderModel()
+            {
+                OwnerId = user,
+                Name = model.Name,
+                Description = model.Description,
+                Cost = model.Cost,
+                CreationDate = DateTime.UtcNow,
+                StateId = 1
+            };
+
+            _context.TenderModels.Add(newTender);
+            await _context.SaveChangesAsync();
+        }
     }
 }

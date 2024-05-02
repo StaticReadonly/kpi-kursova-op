@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Models.ControllerModels;
-using Models.DbModels;
 using Models.Exceptions;
 using Services.Abstractions;
 
@@ -14,8 +13,9 @@ namespace Kursova.Controllers
     [Authorize("Cookies")]
     public class UserTenderController : Controller
     {
-        private readonly IValidator<UserTenderOffersModel> _validator;
+        private readonly IValidator<UserTenderOffersModel> _userTenderOffersModelValidator;
         private readonly IValidator<OfferActionModel> _offerActionValidator;
+        private readonly IValidator<NewTenderModel> _newTenderModelValidator;
         private readonly ILogger<UserTenderController> _logger;
         private readonly ITendersRepository _tendersRepository;
         private readonly IOffersRepository _offersRepository;
@@ -25,13 +25,15 @@ namespace Kursova.Controllers
             ILogger<UserTenderController> logger,
             ITendersRepository tendersRepository,
             IOffersRepository offersRepository,
-            IValidator<OfferActionModel> offerActionValidator)
+            IValidator<OfferActionModel> offerActionValidator,
+            IValidator<NewTenderModel> newTenderModelValidator)
         {
-            _validator = validator;
+            _userTenderOffersModelValidator = validator;
             _logger = logger;
             _tendersRepository = tendersRepository;
             _offersRepository = offersRepository;
             _offerActionValidator = offerActionValidator;
+            _newTenderModelValidator = newTenderModelValidator;
         }
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace Kursova.Controllers
 
             try
             {
-                var guid = User.Claims.Where(c => c.Type == "Id").First().Value;
+                var guid = User.Claims.First(c => c.Type == "Id").Value;
                 var res = _tendersRepository.GetUserTenders(searchModel, Guid.Parse(guid));
 
                 return View(res);
@@ -56,7 +58,7 @@ namespace Kursova.Controllers
         [HttpGet("offers")]
         public IActionResult Offers([FromQuery] UserTenderOffersModel offersModel)
         {
-            ValidationResult res = _validator.Validate(offersModel);
+            ValidationResult res = _userTenderOffersModelValidator.Validate(offersModel);
 
             if (!res.IsValid)
             {
@@ -67,7 +69,7 @@ namespace Kursova.Controllers
 
             try
             {
-                var guid = User.Claims.Where(c => c.Type == "Id").First().Value;
+                var guid = User.Claims.First(c => c.Type == "Id").Value;
                 var resModel = _offersRepository.GetTenderOffers(offersModel, Guid.Parse(guid));
 
                 return View(resModel);
@@ -104,6 +106,30 @@ namespace Kursova.Controllers
                 _logger.LogError(exc.Message);
                 return BadRequest();
             }
+        }
+
+        [HttpGet("new")]
+        public IActionResult NewTender()
+        {
+            return View();
+        }
+
+        [HttpPost("new")]
+        public async Task<IActionResult> NewTender([FromForm] NewTenderModel model)
+        {
+            var result = _newTenderModelValidator.Validate(model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+
+                return View(model);
+            }
+
+            Guid guid = Guid.Parse(User.Claims.First(c => c.Type == "Id").Value);
+            await _tendersRepository.CreateNewTender(model, guid);
+
+            return Redirect("/");
         }
     }
 }

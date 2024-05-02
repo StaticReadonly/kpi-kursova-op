@@ -9,6 +9,8 @@ namespace Kursova
     {
         public static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
             var config = builder.Configuration;

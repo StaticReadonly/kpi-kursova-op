@@ -1,0 +1,35 @@
+﻿@using Models.ControllerModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model NewTenderModel
+@{
+    ViewBag.Title = "New tender";
+}
+
+<link rel="stylesheet" href="~/css/Login.css"/>
+
+<form method="post" asp-controller="UserTender" asp-action="NewTender" class="loginContainer loginContainerForm">
+    <div class="loginContainerLabel">
+        Create new tender
+    </div>
+    <label asp-for="Name" class="formLabel">
+        Name:
+        <input type="text" asp-for="Name" class="formInput" maxlength="100"/>
+        <span asp-validation-for="Name" class="errorField"></span>
+    </label>
+    <label asp-for="Cost" class="formLabel">
+        Cost:
+        <input type="number" asp-for="Cost" step="0.01" min="0" class="formInput" />
+        <span asp-validation-for="Cost" class="errorField"></span>
+    </label>
+    <label asp-for="Description" class="formLabel">
+        Description:
+        <textarea asp-for="Description" class="formInput formTextarea" maxlength="512">
+        </textarea>
+        <span asp-validation-for="Description" class="errorField"></span>
+    </label>
+    <div class="formLoginButtonContainer">
+        <button type="submit" class="formLoginButton">
+            Create
+        </button>
+    </div>
+</form>

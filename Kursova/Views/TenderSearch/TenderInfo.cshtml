@@ -1,9 +1,61 @@
-﻿@model Models.ViewModels.TenderSearch.TenderInfoViewModel;
+﻿@using System.Security.Claims
+@model Models.ViewModels.TenderSearch.TenderInfoViewModel;
+@{
+    ViewBag.Title = "Tender";
+    Claim? guid = null;
 
-<div>
-    @Model.Name
-    @Model.OwnerFullName
-    @Model.ExecuterFullName
-    @Model.Cost
-    @Model.State
+    if (User.Identity?.IsAuthenticated ?? false)
+    {
+        guid = User.Claims.FirstOrDefault(c => c.Type == "Id");
+    }
+}
+
+<link rel="stylesheet" href="~/css/Login.css"/>
+<link rel="stylesheet" href="~/css/TenderSearch.css"/>
+<link rel="stylesheet" href="~/css/NewButton.css" />
+
+@if (guid != null && guid.Value != Model.OwnerId.ToString())
+{
+    <div class="newButton">
+        <a class="newButtonSign" href="/offers/new">
+            +
+        </a>
+    </div>
+}
+<div class="tendersSearchMainContainer">
+    <div class="tendersSearchMainSign">
+        Tender info
+    </div>
+    <div class="tenderContainer">
+        <div class="tenderName tenderItemBorder">
+            Name: @Model.Name
+        </div>
+        <div class="tenderItemBorder">
+            Owner: @Model.OwnerFullName
+        </div>
+        <div class="tenderItemBorder tenderCost">
+            Cost: @Model.Cost
+        </div>
+        <div class="tenderItemBorder">
+            State: @Model.State.Name
+        </div>
+        <div class="tenderDesc2 tenderDesc tenderItemBorder">
+            Description:
+            <div>
+                @Model.Description
+            </div>
+        </div>
+        <div class="tenderItemBorder">
+            Executer: @Model.ExecuterFullName
+        </div>
+        <div class="tenderItemBorder">
+            Creation Date: @Model.CreationDate
+        </div>
+        @if (guid != null && guid.Value == Model.OwnerId.ToString())
+        {
+            <div class="tenderItemBorder">
+                <a href="/tenders/offers?Id=@Model.Id">Show offers</a>
+            </div>
+        }
+    </div>
 </div>

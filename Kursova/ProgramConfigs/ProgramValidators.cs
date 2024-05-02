@@ -14,6 +14,7 @@ namespace Kursova.ProgramConfigs
             services.AddScoped<IValidator<UserTenderOffersModel>, UserTenderOffersModelValidator>();
             services.AddScoped<IValidator<OfferActionModel>, OfferActionModelValidator>();
             services.AddScoped<IValidator<NewTenderModel>, NewTenderModelValidator>();
+            services.AddScoped<IValidator<NewOfferModel>, NewOfferModelValidator>();
         }
     }
 }

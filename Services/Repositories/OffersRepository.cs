@@ -63,13 +63,22 @@ namespace Services.Repositories
 
         private Task AcceptOffer(TenderModel tmodel, OfferActionModel model)
         {
+            Guid executerId = Guid.Empty;
+
             tmodel.Offers.ForEach(m =>
             {
                 if (m.Id == model.OfferId)
+                {
                     m.StateId = 3;
+                    executerId = m.OffererId;
+                }
                 else
+                {
                     m.StateId = 2;
+                }
             });
+
+            tmodel.ExecuterId = executerId;
 
             return Task.CompletedTask;
         }
@@ -167,6 +176,30 @@ namespace Services.Repositories
                 .ToList());
 
             return result;
+        }
+
+        public async Task NewOffer(NewOfferModel model)
+        {
+            var tender = _context.TenderModels.FirstOrDefault(t => t.Id == model.TenderId);
+
+            if (tender == null)
+                throw new FormFieldException("Description", "Can't create offer for unexcisting tender");
+
+            if (tender.OwnerId == model.OwnerId)
+                throw new FormFieldException("Description", "Can't create offer for own tender");
+
+            OfferModel newModel = new OfferModel()
+            {
+                OffererId = model.OwnerId,
+                CreationDate = DateTime.UtcNow,
+                StateId = 1,
+                Price = model.Price,
+                TenderId = tender.Id,
+                Description = model.Description
+            };
+
+            await _context.OfferModels.AddAsync(newModel);
+            await _context.SaveChangesAsync();
         }
     }
 }

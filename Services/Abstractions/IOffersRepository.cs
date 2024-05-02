@@ -8,5 +8,6 @@ namespace Services.Abstractions
         UserTenderOffersViewModel GetTenderOffers(UserTenderOffersModel model, Guid owner);
         UserOffersViewModel GetUserOffers(UserOffersModel model, Guid userId);
         Task OfferAction(Guid guid, OfferActionModel model);
+        Task NewOffer(NewOfferModel model);
     }
 }

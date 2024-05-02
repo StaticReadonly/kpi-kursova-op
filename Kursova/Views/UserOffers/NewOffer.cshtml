@@ -1,0 +1,32 @@
+﻿@using Models.ControllerModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model NewOfferModel
+@{
+    ViewBag.Title = "New offer";
+}
+
+<link rel="stylesheet" href="~/css/Login.css" />
+
+<form method="post" asp-controller="UserOffers" asp-action="NewOffer" class="loginContainer loginContainerForm">
+    <div class="loginContainerLabel">
+        Create new offer
+    </div>
+    <label asp-for="Price" class="formLabel">
+        Price
+        <input type="number" step="0.01" min="0" asp-for="Price" class="formInput" />
+        <span asp-validation-for="Price" class="errorField"></span>
+    </label>
+    <label asp-for="Description" class="formLabel">
+        Description
+        <textarea asp-for="Description" class="formInput formTextarea" maxlength="512">
+
+        </textarea>
+        <span asp-validation-for="Description" class="errorField"></span>
+    </label>
+    <input type="hidden" asp-for="TenderId"/>
+    <div class="formLoginButtonContainer">
+        <button type="submit" class="formLoginButton">
+            Create
+        </button>
+    </div>
+</form>

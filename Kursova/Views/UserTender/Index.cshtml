@@ -25,6 +25,9 @@
                     <div class="tenderDesc tenderItemBorder">@m.Description</div>
                     <div class="tenderCreationDate tenderItemBorder">Created: @m.CreationDate</div>
                     <div class="tenderItemBorder">State: @m.State.Name</div>
+                    <div class="tenderItemBorder">
+                        Executer: @m.Executer?.Surname @m.Executer?.Name @m.Executer?.Patronimyc
+                    </div>
                     <a href="/tenders/offers?id=@m.Id">Show offers</a>
                 </div>
             }

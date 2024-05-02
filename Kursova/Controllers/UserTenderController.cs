@@ -94,7 +94,7 @@ namespace Kursova.Controllers
                 return BadRequest();
             }
 
-            string guid = User.Claims.Where(c => c.Type == "Id").First().Value;
+            string guid = User.Claims.First(c => c.Type == "Id").Value;
 
             try
             {

@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@model Models.ViewModels.TenderSearch.TenderInfoViewModel;
+@model Models.ViewModels.TenderSearch.TenderInfoViewModel
 @{
     ViewBag.Title = "Tender";
     Claim? guid = null;
@@ -13,11 +13,17 @@
 <link rel="stylesheet" href="~/css/Login.css"/>
 <link rel="stylesheet" href="~/css/TenderSearch.css"/>
 <link rel="stylesheet" href="~/css/NewButton.css" />
+<link rel="stylesheet" href="~/css/CopyLinkButton.css"/>
 
+<div class="copyBtnCntr">
+    <div class="copyBtnCntrSign" id="copyBtn">
+        C
+    </div>
+</div>
 @if (guid != null && guid.Value != Model.OwnerId.ToString())
 {
     <div class="newButton">
-        <a class="newButtonSign" href="/offers/new">
+        <a class="newButtonSign" href="/offers/@(Model.Id)/new">
             +
         </a>
     </div>
@@ -59,3 +65,4 @@
         }
     </div>
 </div>
+<script src="~/js/CopyLinkButton.js"></script>

@@ -93,6 +93,7 @@ namespace Services.Repositories
                 tenders = _context.TenderModels
                     .Where(t => t.OwnerId == userId && t.Name.Contains(model.Query))
                     .Include(t => t.State)
+                    .Include(t => t.Executer)
                     .OrderByDescending(t => t.CreationDate)
                     .ToList();
             }
@@ -101,6 +102,7 @@ namespace Services.Repositories
                 tenders = _context.TenderModels
                     .Where(t => t.OwnerId == userId)
                     .Include(t => t.State)
+                    .Include(t => t.Executer)
                     .OrderByDescending(t => t.CreationDate)
                     .ToList();
             }

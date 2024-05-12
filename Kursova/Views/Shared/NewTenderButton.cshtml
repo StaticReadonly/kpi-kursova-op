@@ -1,0 +1,19 @@
+﻿@model Guid
+
+<link rel="stylesheet" href="~/css/SpecialButtons/NewButton.css" />
+
+@if (Model.CompareTo(Guid.Empty) == 0){
+    <div class="newButton">
+        <a class="newButtonSign" href="/tenders/new">
+            +
+        </a>
+    </div>
+}
+else
+{
+    <div class="newButton">
+        <a class="newButtonSign" href="/offers/@(Model)/new">
+            +
+        </a>
+    </div>
+}

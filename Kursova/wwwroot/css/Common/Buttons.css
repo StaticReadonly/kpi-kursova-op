@@ -1,0 +1,72 @@
+﻿/*Grey button*/
+.btnGrey {
+    display: flex;
+    font-size: 20px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    transition: all 200ms linear;
+    cursor: pointer;
+    user-select: none;
+}
+.btnGrey:hover {
+    background-color: rgb(176, 176, 176);
+    box-shadow: 1px 1px 5px black;
+}
+
+/*Grey button with disability*/
+.btnGrey2 {
+    font-size: inherit;
+    display: flex;
+    text-decoration: none;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    transition: all 200ms linear;
+    cursor: pointer;
+    user-select: none;
+}
+
+.btnGrey2:hover {
+    background-color: rgb(143, 143, 143);
+    box-shadow: 1px 1px 5px black;
+}
+
+.btnGrey2:disabled {
+    transition: none;
+    box-shadow: none;
+    background-color: rgb(167, 167, 167);
+    cursor: not-allowed;
+}
+
+/*Green button*/
+.btnGreen {
+    display: flex;
+    border-radius: 6px;
+    padding: 6px;
+    color: rgb(13 119 1);
+    border: 1px solid rgb(13 119 1);
+    transition: all 200ms linear;
+    cursor: pointer;
+}
+
+.btnGreen:hover {
+    background-color: rgba(26, 255, 0, 40);
+}
+
+/*Red button*/
+.btnRed {
+    display: flex;
+    border-radius: 6px;
+    padding: 6px;
+    color: rgb(119 1 1);
+    border: 1px solid rgb(119 1 1);
+    transition: all 200ms linear;
+    cursor: pointer;
+}
+
+.btnRed:hover {
+    background-color: rgba(255, 0, 0, 40);
+}

@@ -6,6 +6,8 @@
 }
 
 <link rel="stylesheet" href="~/css/Login.css" />
+<link rel="stylesheet" href="~/css/Common/Buttons.css" />
+<link rel="stylesheet" href="~/css/Common/Text.css" />
 
 <div class="loginContainer">
     <div class="loginContainerLabel">
@@ -15,35 +17,35 @@
         <label class="formLabel" asp-for="Name">
             Name:
             <input asp-for="Name" type="text" class="formInput" />
-            <span asp-validation-for="Name" class="errorField"></span>
+            <span asp-validation-for="Name" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Surname">
             Surname:
             <input asp-for="Surname" type="text" class="formInput" />
-            <span asp-validation-for="Surname" class="errorField"></span>
+            <span asp-validation-for="Surname" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Patronimyc">
             Patronimyc:
             <input asp-for="Patronimyc" type="text" class="formInput" />
-            <span asp-validation-for="Patronimyc" class="errorField"></span>
+            <span asp-validation-for="Patronimyc" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Address">
             Address:
             <input asp-for="Address" type="text" class="formInput" />
-            <span asp-validation-for="Address" class="errorField"></span>
+            <span asp-validation-for="Address" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Email">
             Email:
             <input asp-for="Email" type="email" class="formInput" />
-            <span asp-validation-for="Email" class="errorField"></span>
+            <span asp-validation-for="Email" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Password">
             Password:
             <input asp-for="Password" type="password" class="formInput" />
-            <span asp-validation-for="Password" class="errorField"></span>
+            <span asp-validation-for="Password" class="txtRedErr"></span>
         </label>
         <div class="formLoginButtonContainer">
-            <button type="submit" class="formLoginButton">
+            <button type="submit" class="btnGrey">
                 Create
             </button>
         </div>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Models.DbModels;
-using Models.ViewModels;
+using Models.ViewModels.UserTender;
 
 namespace Models.AutoMapper
 {

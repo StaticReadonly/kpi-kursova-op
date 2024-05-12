@@ -29,31 +29,3 @@
     gap: 10px;
     justify-content: end;
 }
-
-.acceptButton {
-    display: flex;
-    border-radius: 6px;
-    padding: 6px;
-    color: rgb(13 119 1);
-    border: 1px solid rgb(13 119 1);
-    transition: all 200ms linear;
-    cursor: pointer;
-}
-
-.acceptButton:hover{
-    background-color: rgba(26, 255, 0, 40);
-}
-
-.refuseButton {
-    display: flex;
-    border-radius: 6px;
-    padding: 6px;
-    color: rgb(119 1 1);
-    border: 1px solid rgb(119 1 1);
-    transition: all 200ms linear;
-    cursor: pointer;
-}
-
-.refuseButton:hover {
-    background-color: rgba(255, 0, 0, 40);
-}

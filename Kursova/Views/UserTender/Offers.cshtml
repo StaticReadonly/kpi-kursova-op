@@ -1,4 +1,5 @@
-﻿@model UserTenderOffersViewModel
+﻿@using Models.ViewModels.UserTender
+@model UserTenderOffersViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewBag.Title = "Offers";
@@ -6,6 +7,8 @@
 
 <link rel="stylesheet" href="~/css/TenderOffers.css"/>
 <link rel="stylesheet" href="~/css/TenderSearch.css" />
+<link rel="stylesheet" href="~/css/Common/Buttons.css" />
+<link rel="stylesheet" href="~/css/Common/Text.css" />
 
 <div class="tendersSearchMainContainer">
     <div class="tendersSearchMainSign">
@@ -23,7 +26,7 @@
                                 @m.OffererSurname @m.OffererName @m.OffererPatronimyc
                             </div>
                         </div>
-                        <div class="tenderItemBorder tenderCost">
+                        <div class="tenderItemBorder txtGreenCst">
                             Price: 
                             <div>
                                 @m.Price
@@ -52,10 +55,10 @@
                                 <form class="offersActions" method="post" asp-controller="UserTender" asp-action="OfferAction">
                                     <input type="hidden" name="tenderId" value="@Model.Id" />
                                     <input type="hidden" name="offerId" value="@m.Id" />
-                                    <button type="submit" class="acceptButton" name="action" value="accept">
+                                    <button type="submit" class="btnGreen" name="action" value="accept">
                                         Accept
                                     </button>
-                                    <button type="submit" class="refuseButton" name="action" value="refuse">
+                                    <button type="submit" class="btnRed" name="action" value="refuse">
                                         Refuse
                                     </button>
                                 </form>
@@ -68,14 +71,6 @@
     </div>
     <form method="get" class="tendersNavigationContainer">
         <input type="hidden" asp-for="Id"/>
-        <button class="tendersNavigationBtn" type="submit" name="page"
-                value="@(Model.CurrentPage - 1)" disabled="@(Model.CurrentPage == 1 ? true : false)">
-            Previous page
-        </button>
-        <span class="tendersPageSign"> @(Model.CurrentPage)/@(Model.TotalPages) </span>
-        <button class="tendersNavigationBtn" type="submit" name="page"
-                value="@(Model.CurrentPage + 1)" disabled="@(Model.CurrentPage == Model.TotalPages ? true : false)">
-            Next page
-        </button>
+        @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
     </form>
 </div>

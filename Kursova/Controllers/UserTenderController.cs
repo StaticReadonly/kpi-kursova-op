@@ -16,6 +16,7 @@ namespace Kursova.Controllers
         private readonly IValidator<UserTenderOffersModel> _userTenderOffersModelValidator;
         private readonly IValidator<OfferActionModel> _offerActionValidator;
         private readonly IValidator<NewTenderModel> _newTenderModelValidator;
+        private readonly IValidator<TenderInitialActionModel> _initialActionValidator;
         private readonly ILogger<UserTenderController> _logger;
         private readonly ITendersRepository _tendersRepository;
         private readonly IOffersRepository _offersRepository;
@@ -26,7 +27,8 @@ namespace Kursova.Controllers
             ITendersRepository tendersRepository,
             IOffersRepository offersRepository,
             IValidator<OfferActionModel> offerActionValidator,
-            IValidator<NewTenderModel> newTenderModelValidator)
+            IValidator<NewTenderModel> newTenderModelValidator,
+            IValidator<TenderInitialActionModel> initialActionValidator)
         {
             _userTenderOffersModelValidator = validator;
             _logger = logger;
@@ -34,6 +36,7 @@ namespace Kursova.Controllers
             _offersRepository = offersRepository;
             _offerActionValidator = offerActionValidator;
             _newTenderModelValidator = newTenderModelValidator;
+            _initialActionValidator = initialActionValidator;
         }
 
         [HttpGet]
@@ -51,7 +54,7 @@ namespace Kursova.Controllers
             catch (ArgumentException exc)
             {
                 _logger.LogError(exc.Message);
-                return BadRequest();
+                return Redirect("/tenders");
             }
         }
 
@@ -129,7 +132,33 @@ namespace Kursova.Controllers
             Guid guid = Guid.Parse(User.Claims.First(c => c.Type == "Id").Value);
             await _tendersRepository.CreateNewTender(model, guid);
 
-            return Redirect("/");
+            return Redirect("/tenders");
+        }
+
+        [HttpPost("action")]
+        public async Task<IActionResult> TenderInitialAction([FromForm] TenderInitialActionModel model)
+        {
+            var result = _initialActionValidator.Validate(model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState);
+
+                return View(model);
+            }
+
+            Guid guid = Guid.Parse(User.Claims.First(c => c.Type == "Id").Value);
+
+            try
+            {
+                await _tendersRepository.TenderInitialAction(model, guid);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest();
+            }
+
+            return Redirect("/tenders");
         }
     }
 }

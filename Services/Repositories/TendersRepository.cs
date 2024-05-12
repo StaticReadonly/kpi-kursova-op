@@ -4,7 +4,8 @@ using Microsoft.Extensions.Options;
 using Models.ControllerModels;
 using Models.DbModels;
 using Models.Options;
-using Models.ViewModels;
+using Models.ViewModels.TenderSearch;
+using Models.ViewModels.UserTender;
 using Services.Abstractions;
 
 namespace Services.Repositories
@@ -29,8 +30,9 @@ namespace Services.Repositories
 
             TenderSearchViewModel result = new TenderSearchViewModel();
             result.Query = searchModel.Query;
+            result.CurrentPage = searchModel.Page;
 
-            IQueryable<TenderModel> items = _context.TenderModels;
+            IQueryable<TenderModel> items = _context.TenderModels.OrderByDescending(t => t.CreationDate);
 
             if (result.Query != null)
             {
@@ -41,8 +43,6 @@ namespace Services.Repositories
                 items = items.Where(t => t.OwnerId != userId);
 
             int amount = items.Count();
-
-            result.CurrentPage = searchModel.Page;
 
             if (amount % _paginationOptions.ItemsPerPage != 0)
             {
@@ -81,8 +81,12 @@ namespace Services.Repositories
 
         public UserTenderViewModel GetUserTenders(TenderSearchModel model, Guid userId)
         {
+            if (model.Page < 1)
+                throw new ArgumentException("Can't access page below 1");
+
             UserTenderViewModel res = new UserTenderViewModel() 
             {
+                Query = model.Query,
                 CurrentPage = model.Page
             };
 
@@ -118,8 +122,8 @@ namespace Services.Repositories
                 res.TotalPages = cnt / _paginationOptions.ItemsPerPage;
             }
 
-            if (model.Page > res.TotalPages)
-                throw new ArgumentException($"Tried to access unexisting page {model.Page}");
+            if (res.CurrentPage > res.TotalPages)
+                throw new ArgumentException($"Tried to access unexisting page");
 
             res.Tenders = tenders.Skip((model.Page - 1) * _paginationOptions.ItemsPerPage)
                 .Take(_paginationOptions.ItemsPerPage)
@@ -137,10 +141,44 @@ namespace Services.Repositories
                 Description = model.Description,
                 Cost = model.Cost,
                 CreationDate = DateTime.UtcNow,
-                StateId = 1
+                StateId = 3
             };
 
             _context.TenderModels.Add(newTender);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task TenderInitialAction(TenderInitialActionModel model, Guid user)
+        {
+            var tender = _context.TenderModels.FirstOrDefault(t => t.Id == model.TenderId);
+
+            if (tender == null)
+                throw new ArgumentException("Tender does not exist");
+
+            if (tender.OwnerId != user)
+                throw new ArgumentException("Access denied");
+
+            if (tender.StateId != 3)
+                throw new ArgumentException("Tender is already accepting offers");
+
+            switch (model.Action)
+            {
+                case "Start":
+                    {
+                        tender.StateId = 1;
+                        break;
+                    }
+                case "Delete":
+                    {
+                        _context.TenderModels.Remove(tender);
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentException("Invalid action");
+                    }
+            }
+
             await _context.SaveChangesAsync();
         }
     }

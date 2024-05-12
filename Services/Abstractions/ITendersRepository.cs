@@ -1,6 +1,7 @@
 ﻿using Models.ControllerModels;
 using Models.DbModels;
-using Models.ViewModels;
+using Models.ViewModels.TenderSearch;
+using Models.ViewModels.UserTender;
 
 namespace Services.Abstractions
 {
@@ -13,5 +14,7 @@ namespace Services.Abstractions
         UserTenderViewModel GetUserTenders(TenderSearchModel model, Guid userId);
 
         Task CreateNewTender(NewTenderModel model, Guid user);
+
+        Task TenderInitialAction(TenderInitialActionModel model, Guid user);
     }
 }

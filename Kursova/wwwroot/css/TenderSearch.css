@@ -9,34 +9,16 @@
     width: 90vw;
 }
 
+.usrTndrsLst{
+    width: 90vw;
+}
+
 .tendersSearchMainSign {
     display: flex;
     font-size: 40px;
     font-weight: bold;
     justify-content: center;
     padding: 0.5em;
-}
-
-.tendersSearchInputContainer {
-    display: flex;
-    align-items: stretch;
-    padding: 0.25em;
-    font-size: 24px;
-}
-
-.tendersSearchInputField {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    font-size: inherit;
-}
-
-.tendersSearchInputBtn {
-    display: flex;
-    width: 10%;
-    justify-content: center;
-    align-items: center;
-    font-size: inherit;
 }
 
 .tendersListContainer {
@@ -68,12 +50,6 @@
     font-size: 28px;
 }
 
-.tenderCost {
-    display: flex;
-    font-size: 22px;
-    color: lime;
-}
-
 .tenderDesc {
     display: flex;
     font-size: 18px;
@@ -98,30 +74,6 @@
     justify-content: center;
     font-size: 20px;
     align-items: center;
-}
-
-.tendersNavigationBtn {
-    font-size: inherit;
-    display: flex;
-    text-decoration: none;
-    border: 1px solid darkgray;
-    border-radius: 5px;
-    padding: 5px;
-    color: black;
-    transition: all 200ms linear;
-    cursor: pointer;
-}
-
-.tendersNavigationBtn:hover{
-    background-color: rgb(143, 143, 143);
-    box-shadow: 1px 1px 5px black;
-}
-
-.tendersNavigationBtn:disabled{
-    transition: none;
-    box-shadow: none;
-    background-color: rgb(167, 167, 167);
-    cursor: not-allowed;
 }
 
 .tendersPageSign {

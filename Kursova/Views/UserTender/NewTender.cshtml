@@ -6,6 +6,8 @@
 }
 
 <link rel="stylesheet" href="~/css/Login.css"/>
+<link rel="stylesheet" href="~/css/Common/Buttons.css" />
+<link rel="stylesheet" href="~/css/Common/Text.css" />
 
 <form method="post" asp-controller="UserTender" asp-action="NewTender" class="loginContainer loginContainerForm">
     <div class="loginContainerLabel">
@@ -14,21 +16,21 @@
     <label asp-for="Name" class="formLabel">
         Name:
         <input type="text" asp-for="Name" class="formInput" maxlength="100"/>
-        <span asp-validation-for="Name" class="errorField"></span>
+        <span asp-validation-for="Name" class="txtRedErr"></span>
     </label>
     <label asp-for="Cost" class="formLabel">
         Cost:
         <input type="number" asp-for="Cost" step="0.01" min="0" class="formInput" />
-        <span asp-validation-for="Cost" class="errorField"></span>
+        <span asp-validation-for="Cost" class="txtRedErr"></span>
     </label>
     <label asp-for="Description" class="formLabel">
         Description:
         <textarea asp-for="Description" class="formInput formTextarea" maxlength="512">
         </textarea>
-        <span asp-validation-for="Description" class="errorField"></span>
+        <span asp-validation-for="Description" class="txtRedErr"></span>
     </label>
     <div class="formLoginButtonContainer">
-        <button type="submit" class="formLoginButton">
+        <button type="submit" class="btnGrey">
             Create
         </button>
     </div>

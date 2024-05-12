@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.DbModels;
-using Models.ViewModels;
+using Models.ViewModels.User;
 using Services.Abstractions;
 
 namespace Kursova.Controllers

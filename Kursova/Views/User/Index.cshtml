@@ -1,10 +1,12 @@
-﻿@model UserViewModel;
+﻿@using Models.ViewModels.User
+@model UserViewModel
 @{
     ViewBag.Title = "User";
 }
 
 <link rel="stylesheet" href="~/css/User.css" />
 <link rel="stylesheet" href="~/css/Login.css"/>
+<link rel="stylesheet" href="~/css/Common/Buttons.css" />
 
 <div class="userDataContainer">
     <div class="userDataSet">
@@ -21,7 +23,7 @@
         <a href="/tenders">Tenders</a>
     </div>
     <form method="post" class="logoutButtonContainer">
-        <button type="submit" class="formLoginButton">
+        <button type="submit" class="btnGrey">
             Log out
         </button>
     </form>

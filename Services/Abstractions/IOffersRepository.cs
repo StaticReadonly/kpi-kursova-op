@@ -1,5 +1,6 @@
 ﻿using Models.ControllerModels;
-using Models.ViewModels;
+using Models.ViewModels.UserOffers;
+using Models.ViewModels.UserTender;
 
 namespace Services.Abstractions
 {

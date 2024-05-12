@@ -6,7 +6,8 @@ using Models.ControllerModels;
 using Models.DbModels;
 using Models.Exceptions;
 using Models.Options;
-using Models.ViewModels;
+using Models.ViewModels.UserOffers;
+using Models.ViewModels.UserTender;
 using Services.Abstractions;
 
 namespace Services.Repositories
@@ -39,7 +40,7 @@ namespace Services.Repositories
                 throw new ArgumentException("Can't access tender for specified user");
 
             if (tenderCheck.StateId != 1)
-                throw new ArgumentException("Tender state is already changed");
+                throw new ArgumentException("Tender isn't accepting offers");
 
             switch (model.Action)
             {

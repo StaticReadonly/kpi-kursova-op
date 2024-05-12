@@ -1,0 +1,12 @@
+﻿/*Error field*/
+.txtRedErr {
+    display: flex;
+    color: red;
+}
+
+/*Green cost field*/
+.txtGreenCst {
+    display: flex;
+    font-size: 22px;
+    color: lime;
+}

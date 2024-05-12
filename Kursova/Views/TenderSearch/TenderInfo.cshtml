@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
-@model Models.ViewModels.TenderSearch.TenderInfoViewModel
+@using Models.ViewModels.TenderSearch
+@model TenderInfoViewModel
 @{
     ViewBag.Title = "Tender";
     Claim? guid = null;
@@ -12,21 +13,14 @@
 
 <link rel="stylesheet" href="~/css/Login.css"/>
 <link rel="stylesheet" href="~/css/TenderSearch.css"/>
-<link rel="stylesheet" href="~/css/NewButton.css" />
-<link rel="stylesheet" href="~/css/CopyLinkButton.css"/>
+<link rel="stylesheet" href="~/css/SpecialButtons/NewButton.css" />
+<link rel="stylesheet" href="~/css/SpecialButtons/CopyLinkButton.css" />
+<link rel="stylesheet" href="~/css/Common/Text.css" />
 
-<div class="copyBtnCntr">
-    <div class="copyBtnCntrSign" id="copyBtn">
-        C
-    </div>
-</div>
+@await Html.PartialAsync("~/Views/Shared/CopyLinkButton.cshtml")
 @if (guid != null && guid.Value != Model.OwnerId.ToString())
 {
-    <div class="newButton">
-        <a class="newButtonSign" href="/offers/@(Model.Id)/new">
-            +
-        </a>
-    </div>
+    @await Html.PartialAsync("~/Views/Shared/NewTenderButton.cshtml", Model.Id)
 }
 <div class="tendersSearchMainContainer">
     <div class="tendersSearchMainSign">
@@ -39,7 +33,7 @@
         <div class="tenderItemBorder">
             Owner: @Model.OwnerFullName
         </div>
-        <div class="tenderItemBorder tenderCost">
+        <div class="tenderItemBorder txtGreenCst">
             Cost: @Model.Cost
         </div>
         <div class="tenderItemBorder">
@@ -58,7 +52,7 @@
             Creation Date: @Model.CreationDate
         </div>
         @if (guid != null && guid.Value == Model.OwnerId.ToString())
-        {
+        { 
             <div class="tenderItemBorder">
                 <a href="/tenders/offers?Id=@Model.Id">Show offers</a>
             </div>

@@ -1,0 +1,9 @@
+﻿@model PaginationModelBase
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/SearchBar.css" />
+
+<div class="srchBarCntr">
+    <input type="text" asp-for="Query" class="srchBarInpt" />
+    <button type="submit" class="srchBarBtn">Search</button>
+</div>

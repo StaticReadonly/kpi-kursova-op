@@ -6,6 +6,8 @@
 }
 
 <link rel="stylesheet" href="~/css/Login.css" />
+<link rel="stylesheet" href="~/css/Common/Buttons.css" />
+<link rel="stylesheet" href="~/css/Common/Text.css" />
 
 <div class="loginContainer">
     <div class="loginContainerLabel">
@@ -15,15 +17,15 @@
         <label class="formLabel" asp-for="Email">
             Email:
             <input asp-for="Email" type="email" class="formInput" />
-            <span asp-validation-for="Email" class="errorField"></span>
+            <span asp-validation-for="Email" class="txtRedErr"></span>
         </label>
         <label class="formLabel" asp-for="Password">
             Password:
             <input asp-for="Password" type="password" class="formInput" />
-            <span asp-validation-for="Password" class="errorField"></span>
+            <span asp-validation-for="Password" class="txtRedErr"></span>
         </label>
         <div class="formLoginButtonContainer">
-            <button type="submit" class="formLoginButton">Login</button>
+            <button type="submit" class="btnGrey">Login</button>
         </div>
     </form>
     <div class="formLinkContainer">

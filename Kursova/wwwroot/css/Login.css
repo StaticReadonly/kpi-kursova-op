@@ -42,29 +42,8 @@
     padding: 10px;
 }
 
-.formLoginButton {
-    display: flex;
-    font-size: 20px;
-    border: 1px solid darkgray;
-    border-radius: 5px;
-    padding: 5px;
-    color: black;
-    transition: all 200ms linear;
-    cursor: pointer;
-}
-
-.formLoginButton:hover {
-    background-color: rgb(176, 176, 176);
-    box-shadow: 1px 1px 5px black;
-}
-
 .formLinkContainer {
     display: flex;
     justify-content: center;
     padding: 1em;
-}
-
-.errorField{
-    display: flex;
-    color: red;
 }

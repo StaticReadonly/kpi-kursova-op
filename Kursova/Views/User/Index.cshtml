@@ -5,10 +5,10 @@
 }
 
 <link rel="stylesheet" href="~/css/User.css" />
-<link rel="stylesheet" href="~/css/Login.css"/>
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<div class="userDataContainer">
+<div class="borderCont stretch width50p margin30 userDataContainer">
     <div class="userDataSet">
         <div>Name: @Model.Name</div>
         <div>Surname: @Model.Surname</div>
@@ -22,7 +22,7 @@
         <a href="/offers">Offers</a>
         <a href="/tenders">Tenders</a>
     </div>
-    <form method="post" class="logoutButtonContainer">
+    <form method="post">
         <button type="submit" class="btnGrey">
             Log out
         </button>

@@ -9,27 +9,28 @@
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
 <link rel="stylesheet" href="~/css/SearchBar.css"/>
 <link rel="stylesheet" href="~/css/Common/Text.css"/>
+<link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<form asp-controller="TenderSearch" asp-action="Index" method="get" class="tendersSearchMainContainer">
-    <div class="tendersSearchMainSign">
+<form asp-controller="TenderSearch" asp-action="Index" method="get" class="mainSrchCont">
+    <div class="centerLblHuge">
         Tenders:
     </div>
     @await Html.PartialAsync("~/Views/Shared/SearchBar.cshtml", Model)
-    <div class="tendersListContainer">
+    <div class="listCont">
         @{
             foreach(var m in Model.Tenders)
             {
-                <div class="tenderContainer">
-                    <div class="tenderName tenderItemBorder">
+                <div class="borderCont gap10 stretch">
+                    <div class="tenderName itmBrdr">
                         @m.Name
                     </div>
-                    <div class="txtGreenCst tenderItemBorder">
+                    <div class="txtGreenCst itmBrdr">
                         Price: @m.Cost
                     </div>
-                    <div class="tenderDesc tenderItemBorder">
+                    <div class="tenderDesc itmBrdr">
                         @m.Description
                     </div>
-                    <div class="tenderCreationDate tenderItemBorder">
+                    <div class="tenderCreationDate itmBrdr">
                         Created: @m.CreationDate
                     </div>
                     <a href="/tender/@m.Id">
@@ -39,7 +40,7 @@
             }
         }
     </div>
-    <div class="tendersNavigationContainer">
+    <div class="btnNavCont">
         @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
     </div>
 </form>

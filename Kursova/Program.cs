@@ -1,3 +1,4 @@
+using FluentValidation;
 using Kursova.ProgramConfigs;
 using Microsoft.EntityFrameworkCore;
 using Models.Options;
@@ -9,7 +10,7 @@ namespace Kursova
     {
         public static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
 
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
@@ -43,6 +44,8 @@ namespace Kursova
                 cfg.UseNpgsql(config["Database:ConnectionString"]);
             });
 
+            //PasswordService
+            ProgramPasswordService.AddPasswordService(services);
             //LogInService
             ProgramLogInService.AddLogInService(services);
             //repositories
@@ -56,6 +59,7 @@ namespace Kursova
 
             if (!app.Environment.IsDevelopment())
             {
+                
                 app.UseHsts();
             }
 

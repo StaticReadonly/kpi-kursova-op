@@ -5,30 +5,30 @@
     ViewBag.Title = "Login";
 }
 
-<link rel="stylesheet" href="~/css/Login.css" />
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
 <link rel="stylesheet" href="~/css/Common/Text.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css"/>
 
-<div class="loginContainer">
-    <div class="loginContainerLabel">
+<div class="borderCont width50p margin30">
+    <div class="centerLblBig">
         Login
     </div>
-    <form method="post" asp-controller="Login" asp-action="Login" class="loginContainerForm">
-        <label class="formLabel" asp-for="Email">
+    <form method="post" asp-controller="Login" asp-action="Login" class="formCont">
+        <label class="label" asp-for="Email">
             Email:
-            <input asp-for="Email" type="email" class="formInput" />
+            <input asp-for="Email" type="email" class="input" />
             <span asp-validation-for="Email" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Password">
+        <label class="label" asp-for="Password">
             Password:
-            <input asp-for="Password" type="password" class="formInput" />
+            <input asp-for="Password" type="password" class="input" />
             <span asp-validation-for="Password" class="txtRedErr"></span>
         </label>
-        <div class="formLoginButtonContainer">
+        <div class="btnCntrCont">
             <button type="submit" class="btnGrey">Login</button>
         </div>
     </form>
-    <div class="formLinkContainer">
+    <div class="linkCont">
         <a href="/login/new">Create new account</a>
     </div>
 </div>

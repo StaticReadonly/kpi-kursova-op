@@ -5,46 +5,46 @@
     ViewBag.Title = "Login";
 }
 
-<link rel="stylesheet" href="~/css/Login.css" />
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
 <link rel="stylesheet" href="~/css/Common/Text.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<div class="loginContainer">
-    <div class="loginContainerLabel">
+<div class="borderCont width50p margin30">
+    <div class="centerLblBig">
         Create new account
     </div>
-    <form method="post" asp-controller="Login" asp-action="Registration" class="loginContainerForm">
-        <label class="formLabel" asp-for="Name">
+    <form method="post" asp-controller="Login" asp-action="Registration" class="formCont">
+        <label class="label" asp-for="Name">
             Name:
-            <input asp-for="Name" type="text" class="formInput" />
+            <input asp-for="Name" type="text" class="input" />
             <span asp-validation-for="Name" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Surname">
+        <label class="label" asp-for="Surname">
             Surname:
-            <input asp-for="Surname" type="text" class="formInput" />
+            <input asp-for="Surname" type="text" class="input" />
             <span asp-validation-for="Surname" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Patronimyc">
+        <label class="label" asp-for="Patronimyc">
             Patronimyc:
-            <input asp-for="Patronimyc" type="text" class="formInput" />
+            <input asp-for="Patronimyc" type="text" class="input" />
             <span asp-validation-for="Patronimyc" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Address">
+        <label class="label" asp-for="Address">
             Address:
-            <input asp-for="Address" type="text" class="formInput" />
+            <input asp-for="Address" type="text" class="input" />
             <span asp-validation-for="Address" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Email">
+        <label class="label" asp-for="Email">
             Email:
-            <input asp-for="Email" type="email" class="formInput" />
+            <input asp-for="Email" type="email" class="input" />
             <span asp-validation-for="Email" class="txtRedErr"></span>
         </label>
-        <label class="formLabel" asp-for="Password">
+        <label class="label" asp-for="Password">
             Password:
-            <input asp-for="Password" type="password" class="formInput" />
+            <input asp-for="Password" type="password" class="input" />
             <span asp-validation-for="Password" class="txtRedErr"></span>
         </label>
-        <div class="formLoginButtonContainer">
+        <div class="btnCntrCont">
             <button type="submit" class="btnGrey">
                 Create
             </button>

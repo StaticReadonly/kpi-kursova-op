@@ -9,18 +9,22 @@ namespace Services.LogInService
 {
     public class LogInService : ILogInService
     {
+        private readonly IPasswordService _passwordService;
         private readonly IUsersRepository _usersRepository;
 
-        public LogInService(IUsersRepository usersRepository)
+        public LogInService(
+            IUsersRepository usersRepository, 
+            IPasswordService passwordService)
         {
             _usersRepository = usersRepository;
+            _passwordService = passwordService;
         }
 
         public async Task LogIn(HttpContext context, string email, string password)
         {
             UserModel? user = await _usersRepository.GetUserDataByEmail(email);
-
-            if (user == null || user.Password != password)
+            
+            if (user == null || !_passwordService.VerifyPassword(password, user.Password))
                 throw new FormFieldException("Password", "Wrong login or password");
 
             Claim id = new Claim("Id", user.Id.ToString());

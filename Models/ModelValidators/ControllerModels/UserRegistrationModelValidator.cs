@@ -16,7 +16,7 @@ namespace Models.ModeValidators.ControllerModels
             RuleFor(m => m.Surname)
                 .NotEmpty()
                 .MinimumLength(3)
-                .MaximumLength(100);
+                .MaximumLength(100); ;
 
             RuleFor(m => m.Patronimyc)
                 .NotEmpty()

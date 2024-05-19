@@ -15,6 +15,7 @@ namespace Kursova.Controllers
     {
         private readonly IValidator<UserLoginModel> _userLoginModelValidator;
         private readonly IValidator<UserRegistrationModel> _userRegistrationModelValidator;
+        private readonly IPasswordService _passwordService;
         private readonly IUsersRepository _usersRepository;
         private readonly ILogInService _logInService;
 
@@ -22,12 +23,14 @@ namespace Kursova.Controllers
             IValidator<UserLoginModel> userLoginControllerModelValidator,
             IValidator<UserRegistrationModel> userRegistrationModelValidator,
             ILogInService logInService,
-            IUsersRepository usersRepository)
+            IUsersRepository usersRepository,
+            IPasswordService passwordService)
         {
             _userLoginModelValidator = userLoginControllerModelValidator;
             _userRegistrationModelValidator = userRegistrationModelValidator;
             _logInService = logInService;
             _usersRepository = usersRepository;
+            _passwordService = passwordService;
         }
 
         [HttpGet]
@@ -50,7 +53,7 @@ namespace Kursova.Controllers
 
             try
             {
-                await _logInService.LogIn(HttpContext, loginModel.Email!, loginModel.Password!);
+                await _logInService.LogIn(HttpContext, loginModel.Email, loginModel.Password);
                 return Redirect("/user");
             }
             catch (FormFieldException exc)
@@ -81,6 +84,8 @@ namespace Kursova.Controllers
 
             try
             {
+                registrationModel.Password = _passwordService.HashPassword(registrationModel.Password);
+
                 Guid id = await _usersRepository.CreateUser(registrationModel);
                 await _logInService.LogIn(HttpContext, id);
                 return Redirect("/user");

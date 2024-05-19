@@ -5,39 +5,40 @@
     ViewBag.Title = "Offers";
 }
 
-<link rel="stylesheet" href="~/css//TenderSearch.css"/>
+<link rel="stylesheet" href="~/css/TenderSearch.css"/>
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
 <link rel="stylesheet" href="~/css/Common/Text.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<div class="tendersSearchMainContainer">
-    <div class="tendersSearchMainSign">
+<div class="mainSrchCont">
+    <div class="centerLblHuge">
         Your offers:
     </div>
-    <div class="tendersListContainer">
+    <div class="listCont">
         @{
             foreach(var o in Model.Offers)
             {
-                <div class="tenderContainer">
+                <div class="borderCont gap10 stretch">
                     <div class="txtGreenCst tenderItemBorder">
                         Price: @o.Price
                     </div>
-                    <div class="tenderDesc tenderDesc2 tenderItemBorder">
+                    <div class="tenderDesc tenderDesc2 itmBrdr">
                         Description:
                         <div>
                             @o.Description
                         </div>
                     </div>
-                    <div class="tenderCreationDate tenderItemBorder">
+                    <div class="tenderCreationDate itmBrdr">
                         Creation date: @o.CreationDate
                     </div>
-                    <div class="tenderItemBorder">
+                    <div class="itmBrdr">
                         State: @o.State.Name
                     </div>
                 </div>
             }
         }
     </div>
-    <form method="get" asp-controller="UserOffers" asp-action="Index" class="tendersNavigationContainer">
+    <form method="get" asp-controller="UserOffers" asp-action="Index" class="btnNavCont">
         @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
     </form>
 </div>

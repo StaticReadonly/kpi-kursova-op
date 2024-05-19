@@ -9,50 +9,51 @@
 <link rel="stylesheet" href="~/css/TenderSearch.css" />
 <link rel="stylesheet" href="~/css/Common/Buttons.css" />
 <link rel="stylesheet" href="~/css/Common/Text.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css"/>
 
-<div class="tendersSearchMainContainer">
-    <div class="tendersSearchMainSign">
+<div class="mainSrchCont">
+    <div class="centerLblHuge">
         Tender Offers:
     </div>
-    <div class="tendersListContainer">
+    <div class="listCont">
         @{
             foreach(var m in Model.Offers)
             {
-                <div class="tenderContainer">
-                    <div class="offerContainerGap">
-                        <div class="tenderItemBorder tenderName">
+                <div class="borderCont gap10 stretch">
+                    <div class="gap10">
+                        <div class="itmBrdr tenderName">
                             Offerer: 
                             <div>
                                 @m.OffererSurname @m.OffererName @m.OffererPatronimyc
                             </div>
                         </div>
-                        <div class="tenderItemBorder txtGreenCst">
+                        <div class="itmBrdr txtGreenCst">
                             Price: 
                             <div>
                                 @m.Price
                             </div>
                         </div>
-                        <div class="tenderItemBorder tenderDesc offerDesc">
+                        <div class="itmBrdr tenderDesc offerDesc">
                             Description: 
                             <div>
                                 @m.Description
                             </div>
                         </div>
-                        <div class="tenderItemBorder">
+                        <div class="itmBrdr">
                             Creation date:    
                             <div>
                                 @m.CreationDate
                             </div>
                         </div>
                     </div>
-                    <div class="tenderItemBorder">
+                    <div class="itmBrdr">
                         State: @m.State
                     </div>
                     <div>
                         @{
                             if (m.StateId == 1)
                             {
-                                <form class="offersActions" method="post" asp-controller="UserTender" asp-action="OfferAction">
+                                <form class="btnRghtCont" method="post" asp-controller="UserTender" asp-action="OfferAction">
                                     <input type="hidden" name="tenderId" value="@Model.Id" />
                                     <input type="hidden" name="offerId" value="@m.Id" />
                                     <button type="submit" class="btnGreen" name="action" value="accept">
@@ -69,7 +70,7 @@
             }
         }
     </div>
-    <form method="get" class="tendersNavigationContainer">
+    <form method="get" class="btnNavCont">
         <input type="hidden" asp-for="Id"/>
         @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
     </form>

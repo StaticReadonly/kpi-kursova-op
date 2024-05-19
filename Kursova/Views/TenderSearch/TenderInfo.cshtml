@@ -11,49 +11,49 @@
     }
 }
 
-<link rel="stylesheet" href="~/css/Login.css"/>
 <link rel="stylesheet" href="~/css/TenderSearch.css"/>
 <link rel="stylesheet" href="~/css/SpecialButtons/NewButton.css" />
 <link rel="stylesheet" href="~/css/SpecialButtons/CopyLinkButton.css" />
 <link rel="stylesheet" href="~/css/Common/Text.css" />
+<link rel="stylesheet" href="~/css/Common/Containers.css" />
 
 @await Html.PartialAsync("~/Views/Shared/CopyLinkButton.cshtml")
 @if (guid != null && guid.Value != Model.OwnerId.ToString())
 {
     @await Html.PartialAsync("~/Views/Shared/NewTenderButton.cshtml", Model.Id)
 }
-<div class="tendersSearchMainContainer">
-    <div class="tendersSearchMainSign">
+<div class="mainSrchCont">
+    <div class="centerLblHuge">
         Tender info
     </div>
-    <div class="tenderContainer">
-        <div class="tenderName tenderItemBorder">
+    <div class="borderCont gap10 stretch">
+        <div class="tenderName itmBrdr">
             Name: @Model.Name
         </div>
         <div class="tenderItemBorder">
             Owner: @Model.OwnerFullName
         </div>
-        <div class="tenderItemBorder txtGreenCst">
+        <div class="itmBrdr txtGreenCst">
             Cost: @Model.Cost
         </div>
         <div class="tenderItemBorder">
             State: @Model.State.Name
         </div>
-        <div class="tenderDesc2 tenderDesc tenderItemBorder">
+        <div class="tenderDesc2 tenderDesc itmBrdr">
             Description:
             <div>
                 @Model.Description
             </div>
         </div>
-        <div class="tenderItemBorder">
+        <div class="itmBrdr">
             Executer: @Model.ExecuterFullName
         </div>
-        <div class="tenderItemBorder">
+        <div class="itmBrdr">
             Creation Date: @Model.CreationDate
         </div>
         @if (guid != null && guid.Value == Model.OwnerId.ToString())
-        { 
-            <div class="tenderItemBorder">
+        {
+            <div class="itmBrdr">
                 <a href="/tenders/offers?Id=@Model.Id">Show offers</a>
             </div>
         }

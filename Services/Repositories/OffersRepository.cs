@@ -14,6 +14,7 @@ namespace Services.Repositories
 {
     public class OffersRepository : IOffersRepository
     {
+        private readonly ITenderStateInfoService _stateInfoService;
         private readonly DatabaseContext _context;
         private readonly PaginationOptions _paginationOptions;
         private readonly IMapper _mapper;
@@ -21,11 +22,13 @@ namespace Services.Repositories
         public OffersRepository(
             DatabaseContext context,
             IOptions<PaginationOptions> paginationOptions,
-            IMapper mapper)
+            IMapper mapper,
+            ITenderStateInfoService stateInfoService)
         {
             _paginationOptions = paginationOptions.Value;
             _context = context;
             _mapper = mapper;
+            _stateInfoService = stateInfoService;
         }
 
         public async Task OfferAction(Guid guid, OfferActionModel model)
@@ -39,7 +42,7 @@ namespace Services.Repositories
             if (tenderCheck == null)
                 throw new ArgumentException("Can't access tender for specified user");
 
-            if (tenderCheck.StateId != 1)
+            if (!_stateInfoService.IsWaitingForOffers(tenderCheck))
                 throw new ArgumentException("Tender isn't accepting offers");
 
             switch (model.Action)
@@ -123,6 +126,11 @@ namespace Services.Repositories
                 res.TotalPages = cnt / _paginationOptions.ItemsPerPage;
             }
 
+            if (res.TotalPages == 0)
+            {
+                return res;
+            }
+
             if (model.Page > res.TotalPages)
                 throw new ArgumentException($"Tried to access unexisting page {model.Page}");
 
@@ -156,9 +164,6 @@ namespace Services.Repositories
                 .Include(o => o.State)
                 .ToList();
 
-            if (offers.Count == 0)
-                throw new NoOffersException();
-
             if (offers.Count % _paginationOptions.ItemsPerPage != 0)
             {
                 result.TotalPages = offers.Count / _paginationOptions.ItemsPerPage + 1;
@@ -166,6 +171,11 @@ namespace Services.Repositories
             else
             {
                 result.TotalPages = offers.Count / _paginationOptions.ItemsPerPage;
+            }
+
+            if (result.TotalPages == 0)
+            {
+                return result;
             }
 
             if (result.CurrentPage > result.TotalPages)
@@ -185,6 +195,9 @@ namespace Services.Repositories
 
             if (tender == null)
                 throw new FormFieldException("Description", "Can't create offer for unexcisting tender");
+
+            if (_stateInfoService.IsCreated(tender))
+                throw new Exception("Tender isn't started yet");
 
             if (tender.OwnerId == model.OwnerId)
                 throw new FormFieldException("Description", "Can't create offer for own tender");

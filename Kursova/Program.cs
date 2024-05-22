@@ -33,6 +33,13 @@ namespace Kursova
                 .AddCookie("Cookies", cfg =>
                 {
                     cfg.LoginPath = "/login";
+
+                    var opts = cfg.Cookie;
+                    opts.Path = "/";
+                    opts.HttpOnly = true;
+                    opts.Name = "auth";
+                    opts.SecurePolicy = CookieSecurePolicy.Always;
+                    opts.SameSite = SameSiteMode.Strict;
                 });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -44,6 +51,8 @@ namespace Kursova
                 cfg.UseNpgsql(config["Database:ConnectionString"]);
             });
 
+            //TenderStateInfo
+            ProgramTenderStateInfo.AddTenderStateInfo(services);
             //PasswordService
             ProgramPasswordService.AddPasswordService(services);
             //LogInService
@@ -59,11 +68,13 @@ namespace Kursova
 
             if (!app.Environment.IsDevelopment())
             {
-                
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStatusCodePagesWithRedirects("/error");
+            app.UseExceptionHandler("/error");
 
             app.UseStaticFiles();
 

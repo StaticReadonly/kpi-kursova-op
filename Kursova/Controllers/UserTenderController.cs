@@ -76,9 +76,6 @@ namespace Kursova.Controllers
                 var resModel = _offersRepository.GetTenderOffers(offersModel, Guid.Parse(guid));
 
                 return View(resModel);
-            }catch(NoOffersException)
-            {
-                return View("NoOffers");
             }
             catch(ArgumentException exc)
             {
@@ -102,7 +99,7 @@ namespace Kursova.Controllers
             try
             {
                 await _offersRepository.OfferAction(Guid.Parse(guid), model);
-                return Redirect("/");
+                return Redirect("/tenders");
             }
             catch (Exception exc)
             {

@@ -10,35 +10,44 @@
 <link rel="stylesheet" href="~/css/Common/Text.css" />
 <link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<div class="mainSrchCont">
-    <div class="centerLblHuge">
-        Your offers:
+@if(Model.TotalPages == 0)
+{
+    <div class="noItems">
+        No offers found
     </div>
-    <div class="listCont">
-        @{
-            foreach(var o in Model.Offers)
-            {
-                <div class="borderCont gap10 stretch">
-                    <div class="txtGreenCst tenderItemBorder">
-                        Price: @o.Price
-                    </div>
-                    <div class="tenderDesc tenderDesc2 itmBrdr">
-                        Description:
-                        <div>
-                            @o.Description
+}
+else
+{
+    <div class="mainSrchCont">
+        <div class="centerLblHuge">
+            Your offers:
+        </div>
+        <div class="listCont">
+            @{
+                foreach (var o in Model.Offers)
+                {
+                    <div class="borderCont gap10 stretch">
+                        <div class="txtGreenCst tenderItemBorder">
+                            Price: @o.Price
+                        </div>
+                        <div class="tenderDesc tenderDesc2 itmBrdr">
+                            Description:
+                            <div>
+                                @o.Description
+                            </div>
+                        </div>
+                        <div class="tenderCreationDate itmBrdr">
+                            Creation date: @o.CreationDate
+                        </div>
+                        <div class="itmBrdr">
+                            State: @o.State.Name
                         </div>
                     </div>
-                    <div class="tenderCreationDate itmBrdr">
-                        Creation date: @o.CreationDate
-                    </div>
-                    <div class="itmBrdr">
-                        State: @o.State.Name
-                    </div>
-                </div>
+                }
             }
-        }
+        </div>
+        <form method="get" asp-controller="UserOffers" asp-action="Index" class="btnNavCont">
+            @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
+        </form>
     </div>
-    <form method="get" asp-controller="UserOffers" asp-action="Index" class="btnNavCont">
-        @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
-    </form>
-</div>
+}

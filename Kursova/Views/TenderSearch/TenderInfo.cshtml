@@ -51,7 +51,7 @@
         <div class="itmBrdr">
             Creation Date: @Model.CreationDate
         </div>
-        @if (guid != null && guid.Value == Model.OwnerId.ToString())
+        @if (Model.State.Id != 3 && guid != null && guid.Value == Model.OwnerId.ToString())
         {
             <div class="itmBrdr">
                 <a href="/tenders/offers?Id=@Model.Id">Show offers</a>

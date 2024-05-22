@@ -11,36 +11,45 @@
 <link rel="stylesheet" href="~/css/Common/Text.css"/>
 <link rel="stylesheet" href="~/css/Common/Containers.css" />
 
-<form asp-controller="TenderSearch" asp-action="Index" method="get" class="mainSrchCont">
-    <div class="centerLblHuge">
-        Tenders:
+@if(Model.TotalPages == 0)
+{
+    <div class="noItems">
+        No tenders found
     </div>
-    @await Html.PartialAsync("~/Views/Shared/SearchBar.cshtml", Model)
-    <div class="listCont">
-        @{
-            foreach(var m in Model.Tenders)
-            {
-                <div class="borderCont gap10 stretch">
-                    <div class="tenderName itmBrdr">
-                        @m.Name
+}
+else
+{
+    <form asp-controller="TenderSearch" asp-action="Index" method="get" class="mainSrchCont">
+        <div class="centerLblHuge">
+            Tenders:
+        </div>
+        @await Html.PartialAsync("~/Views/Shared/SearchBar.cshtml", Model)
+        <div class="listCont">
+            @{
+                foreach (var m in Model.Tenders)
+                {
+                    <div class="borderCont gap10 stretch">
+                        <div class="tenderName itmBrdr">
+                            @m.Name
+                        </div>
+                        <div class="txtGreenCst itmBrdr">
+                            Price: @m.Cost
+                        </div>
+                        <div class="tenderDesc itmBrdr">
+                            @m.Description
+                        </div>
+                        <div class="tenderCreationDate itmBrdr">
+                            Created: @m.CreationDate
+                        </div>
+                        <a href="/tender/@m.Id">
+                            Go to tender page
+                        </a>
                     </div>
-                    <div class="txtGreenCst itmBrdr">
-                        Price: @m.Cost
-                    </div>
-                    <div class="tenderDesc itmBrdr">
-                        @m.Description
-                    </div>
-                    <div class="tenderCreationDate itmBrdr">
-                        Created: @m.CreationDate
-                    </div>
-                    <a href="/tender/@m.Id">
-                        Go to tender page
-                    </a>
-                </div>
+                }
             }
-        }
-    </div>
-    <div class="btnNavCont">
-        @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
-    </div>
-</form>
+        </div>
+        <div class="btnNavCont">
+            @await Html.PartialAsync("~/Views/Shared/NavigationButtons.cshtml", Model)
+        </div>
+    </form>
+}

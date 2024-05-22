@@ -3,24 +3,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Models.ControllerModels;
 using Models.DbModels;
+using Models.Exceptions;
 using Models.Options;
 using Models.ViewModels.TenderSearch;
 using Models.ViewModels.UserTender;
 using Services.Abstractions;
+using Services.TenderStateInfoService;
 
 namespace Services.Repositories
 {
     public class TendersRepository : ITendersRepository
     {
+        private readonly ITenderStateInfoService _stateInfoService;
         private readonly DatabaseContext _context;
         private readonly PaginationOptions _paginationOptions;
 
         public TendersRepository(
             DatabaseContext context,
-            IOptions<PaginationOptions> options)
+            IOptions<PaginationOptions> options,
+            ITenderStateInfoService stateInfoService)
         {
             _context = context;
             _paginationOptions = options.Value;
+            _stateInfoService = stateInfoService;
         }
 
         public TenderSearchViewModel GetTenders(TenderSearchModel searchModel, Guid? userId)
@@ -42,6 +47,8 @@ namespace Services.Repositories
             if (userId != null)
                 items = items.Where(t => t.OwnerId != userId);
 
+            items = items.WhereIsWaitingForOffers();
+
             int amount = items.Count();
 
             if (amount % _paginationOptions.ItemsPerPage != 0)
@@ -51,6 +58,11 @@ namespace Services.Repositories
             else
             {
                 result.TotalPages = amount / _paginationOptions.ItemsPerPage;
+            }
+
+            if (result.TotalPages == 0)
+            {
+                return result;
             }
 
             if (result.CurrentPage > result.TotalPages)
@@ -63,18 +75,20 @@ namespace Services.Repositories
             return result;
         }
 
-        public TenderModel GetTenderInfo(Guid Id)
+        public TenderModel GetTenderInfo(Guid Id, Guid? userId)
         {
             TenderModel? result = _context.TenderModels
-                .Where(m => m.Id == Id)
                 .Include(m => m.Owner)
                 .Include(m => m.Offers)
                 .Include(m => m.Executer)
                 .Include(m => m.State)
-                .FirstOrDefault();
+                .FirstOrDefault(m => m.Id == Id);
 
             if (result == null)
                 throw new ArgumentException($"Failed to find tender with id: {Id}");
+
+            if ((userId == null || userId != result.OwnerId) && !_stateInfoService.IsWaitingForOffers(result))
+                throw new ArgumentException("Tender can't accept offers");
 
             return result;
         }
@@ -122,6 +136,11 @@ namespace Services.Repositories
                 res.TotalPages = cnt / _paginationOptions.ItemsPerPage;
             }
 
+            if (res.TotalPages == 0)
+            {
+                return res;
+            }
+
             if (res.CurrentPage > res.TotalPages)
                 throw new ArgumentException($"Tried to access unexisting page");
 
@@ -158,7 +177,7 @@ namespace Services.Repositories
             if (tender.OwnerId != user)
                 throw new ArgumentException("Access denied");
 
-            if (tender.StateId != 3)
+            if (!_stateInfoService.IsCreated(tender))
                 throw new ArgumentException("Tender is already accepting offers");
 
             switch (model.Action)

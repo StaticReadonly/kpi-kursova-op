@@ -29,7 +29,7 @@ namespace Kursova.Controllers
         {
             try
             {
-                var claim = User.Claims.Where(c => c.Type == "Id").FirstOrDefault();
+                var claim = User.Claims.FirstOrDefault(c => c.Type == "Id");
 
                 var result = _tendersRepository.GetTenders(searchModel, 
                     claim == null ? null : Guid.Parse(claim.Value));
@@ -39,7 +39,7 @@ namespace Kursova.Controllers
             catch(ArgumentException ex)
             {
                 _logger.LogError($"Invalid page. Details: {ex.Message}");
-                return Redirect("/");
+                return BadRequest();
             }
         }
 
@@ -48,14 +48,16 @@ namespace Kursova.Controllers
         {
             try
             {
-                var result = _tendersRepository.GetTenderInfo(id);
+                var claim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+
+                var result = _tendersRepository.GetTenderInfo(id, claim == null ? null : Guid.Parse(claim.Value));
 
                 return View(_mapper.Map<TenderInfoViewModel>(result));
             }
             catch(ArgumentException ex)
             {
                 _logger.LogError(ex.Message);
-                return Redirect("/");
+                return BadRequest();
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Models.ControllerModels;
 using Models.ModelValidators.ControllerModels;
-using Models.ModeValidators.ControllerModels;
 
 namespace Kursova.ProgramConfigs
 {

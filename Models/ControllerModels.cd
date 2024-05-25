@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Models.ControllerModels.NewOfferModel">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAQAgAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\NewOfferModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.NewTenderModel">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAABQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\NewTenderModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.OfferActionModel">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ControllerModels\OfferActionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.TenderInitialActionModel">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ControllerModels\TenderInitialActionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.TenderSearchModel">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\TenderSearchModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.UserLoginModel">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\UserLoginModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.UserOffersModel">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\UserOffersModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.UserRegistrationModel">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAICAAAAAAAAAAAAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\UserRegistrationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ControllerModels.UserTenderOffersModel">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControllerModels\UserTenderOffersModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

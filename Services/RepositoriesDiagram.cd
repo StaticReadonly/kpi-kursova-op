@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Services.Repositories.OffersRepository">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAABAAIAhABAAAACABAQAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Repositories\OffersRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+      <Field Name="_paginationOptions" />
+      <Field Name="_mapper" />
+      <Field Name="_stateInfoService" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Right" Position="0.175" />
+  </Class>
+  <Class Name="Services.Repositories.TendersRepository">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAABAAAAAAAgQACAQAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Repositories\TendersRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+      <Field Name="_paginationOptions" />
+      <Field Name="_stateInfoService" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Right" Position="0.123" />
+  </Class>
+  <Class Name="Services.Repositories.UsersRepository">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <AssociationLine Name="_mapper" Type="AutoMapper.IMapper" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.344" Y="2.18" />
+        <Point X="5.344" Y="2.287" />
+        <Point X="4.375" Y="2.287" />
+        <Point X="4.375" Y="5" />
+        <Point X="4.25" Y="5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.807" Y="0.248" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAQAABAAAAAABAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Repositories\UsersRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="Kursova.DatabaseContext.DatabaseContext" Collapsed="true">
+    <Position X="1.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Models.Options.PaginationOptions" Collapsed="true">
+    <Position X="5.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="AutoMapper.IMapper" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Services.Abstractions.ITenderStateInfoService" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Abstractions\ITenderStateInfoService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

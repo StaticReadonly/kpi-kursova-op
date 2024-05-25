@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Models.ViewModels.PaginationModelBase">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAI=</HashCode>
+      <FileName>ViewModels\PaginationModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.TenderSearch.TenderSearchViewModel">
+    <Position X="3.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TenderSearch\TenderSearchViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.UserOffers.UserOffersViewModel">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UserOffers\UserOffersViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.UserTender.UserTenderOffersViewModel">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UserTender\UserTenderOffersViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.UserTender.UserTenderViewModel">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UserTender\UserTenderViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.TenderSearch.TenderInfoViewModel">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAIAAAwAAAAAAAgABQAAAAAAAQAAAAABAAAAAA=</HashCode>
+      <FileName>ViewModels\TenderSearch\TenderInfoViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.User.UserViewModel">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAICAAAAAAAAAAAAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\User\UserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.ViewModels.UserTender.UserTenderOfferViewModel">
+    <Position X="1" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAQQAgQAAAAAAAAAAAAAAAAAAAAAAABACAAAg=</HashCode>
+      <FileName>ViewModels\UserTender\UserTenderOfferViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Models.ControllerModels;
 
-namespace Models.ModeValidators.ControllerModels
+namespace Models.ModelValidators.ControllerModels
 {
     public class UserLoginModelValidator 
         : AbstractValidator<UserLoginModel>

@@ -1,6 +1,4 @@
-﻿using Models.DbModels;
-
-namespace Models.ViewModels.UserTender
+﻿namespace Models.ViewModels.UserTender
 {
     public class UserTenderOffersViewModel : PaginationModelBase
     {

@@ -4,7 +4,6 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.ControllerModels;
-using Models.Exceptions;
 using Services.Abstractions;
 
 namespace Kursova.Controllers
@@ -149,13 +148,12 @@ namespace Kursova.Controllers
             try
             {
                 await _tendersRepository.TenderInitialAction(model, guid);
+                return Redirect("/tenders");
             }
             catch (ArgumentException)
             {
                 return BadRequest();
             }
-
-            return Redirect("/tenders");
         }
     }
 }
